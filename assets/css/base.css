@@ -1,0 +1,326 @@
+/* ============================================================================
+   base.css - reset, design tokens, typography, layout primitives
+   Theme: mission control. Dark navy, amber, mint.
+   Loaded on every page, and always before components.css.
+   ========================================================================= */
+
+/* ---------- 1. Reset (short: only what actually gets in the way) ------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body,
+h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul[class], ol[class] { list-style: none; }
+
+/* The UA rule for [hidden] is display:none at zero specificity, so any class
+   that sets display wins and the element stays on screen. That is how the
+   project-detail "not here" panel ended up showing above a project that was
+   found. Scripts here toggle .hidden, so the attribute has to win. */
+[hidden] { display: none !important; }
+
+img, picture, svg, canvas, video {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+button { background: none; border: 0; cursor: pointer; }
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- 2. Design tokens ------------------------------------------- */
+:root {
+  /* Core palette: deep navy, amber, mint. Keep these three. */
+  --bg:            #0a0e17;
+  --bg-raised:     #0d1220;
+  --bg-panel:      #101728;
+  --bg-inset:      #080c14;
+
+  --amber:         #ffb454;
+  --amber-dim:     #c98a3d;
+  --amber-glow:    rgba(255, 180, 84, .18);
+
+  --mint:          #5eead4;
+  --mint-dim:      #3fae9c;
+  --mint-glow:     rgba(94, 234, 212, .16);
+
+  --text:          #dce4f2;
+  --text-soft:     #9fb0c9;
+  --text-mute:     #7d8da5;   /* 5.4:1 on --bg, passes AA for body text */
+  --danger:        #ff6b6b;
+  --ok:            #5eead4;
+
+  /* Lines use mint at low alpha so edges read as a glowing display */
+  --line:          rgba(94, 234, 212, .12);
+  --line-strong:   rgba(94, 234, 212, .26);
+  --line-amber:    rgba(255, 180, 84, .30);
+
+  /* จังหวะ spacing - สเกล 4px */
+  --sp-1: .25rem;  --sp-2: .5rem;   --sp-3: .75rem;  --sp-4: 1rem;
+  --sp-5: 1.5rem;  --sp-6: 2rem;    --sp-7: 3rem;    --sp-8: 4.5rem;
+  --sp-9: 7rem;
+
+  /* ตัวอักษร */
+  --font-display: "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body:    "IBM Plex Sans Thai Looped", "Noto Sans Thai", "Segoe UI", system-ui, sans-serif;
+  --font-thai:    "IBM Plex Sans Thai", "Noto Sans Thai", "Sarabun", sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "JetBrains Mono", "Cascadia Mono", Consolas, monospace;
+
+  /* Motion timing. The reduced-motion block at the bottom neutralises it. */
+  --dur-fast:  140ms;
+  --dur:       260ms;
+  --dur-slow:  620ms;
+  --ease:      cubic-bezier(.22, .61, .36, 1);
+  --ease-out:  cubic-bezier(.16, 1, .3, 1);
+
+  /* เลย์เอาต์ */
+  --shell:      1240px;
+  --shell-tight: 880px;
+  --nav-h:      68px;
+  /* Shape system, applied consistently:
+       chips and pills  -> fully round (999px)
+       panels, cards, buttons -> cut corner via clip-path, no radius
+       inputs, media    -> square
+     --radius exists only for the few small square-ish affordances. */
+  --radius:     3px;
+
+  --shadow-panel: 0 18px 50px -28px rgba(0, 0, 0, .95);
+  --shadow-lift:  0 28px 70px -30px rgba(0, 0, 0, .9);
+}
+
+/* ---------- 3. ฐานเอกสาร ------------------------------------------------ */
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: clamp(.95rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.7;
+  letter-spacing: .01em;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Fixed backdrop: a fine grid plus two pools of light (amber, mint).
+   Pseudo-elements on body, so no extra DOM and nothing to repaint on scroll. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(720px 460px at 78% -6%,  var(--amber-glow), transparent 62%),
+    radial-gradient(620px 520px at 4% 102%,  var(--mint-glow),  transparent 60%),
+    var(--bg);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right,  rgba(94, 234, 212, .045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(94, 234, 212, .045) 1px, transparent 1px);
+  background-size: 68px 68px;
+  /* Faded through the middle so the grid never fights the text */
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 12%, #000 12%, transparent 78%);
+          mask-image: radial-gradient(120% 90% at 50% 12%, #000 12%, transparent 78%);
+}
+
+/* ---------- 4. Typography ---------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  color: #f2f6fd;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.4rem, 1.5rem + 4.4vw, 4.6rem); }
+h2 { font-size: clamp(1.7rem, 1.2rem + 2.2vw, 2.7rem); }
+h3 { font-size: clamp(1.15rem, 1rem + .8vw, 1.45rem); letter-spacing: -.01em; }
+h4 { font-size: 1.02rem; letter-spacing: 0; }
+
+p { text-wrap: pretty; }
+
+strong { color: #fff; font-weight: 600; }
+
+/* Numbers, code and labels are monospaced with tabular figures, so a value
+   updating in place does not make the row jitter. */
+code, kbd, samp, .mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+::selection {
+  background: var(--amber);
+  color: #0a0e17;
+}
+
+/* ---------- 5. Layout primitives --------------------------------------- */
+.shell {
+  width: min(100% - 2.5rem, var(--shell));
+  margin-inline: auto;
+}
+
+.shell--tight { max-width: var(--shell-tight); }
+
+.section { padding-block: clamp(3.5rem, 2rem + 7vw, var(--sp-9)); }
+
+.section--first { padding-top: clamp(2rem, 1rem + 4vw, 3.5rem); }
+
+.stack > * + * { margin-top: var(--sp-4); }
+
+.lede {
+  font-size: clamp(1.02rem, .98rem + .35vw, 1.2rem);
+  color: var(--text-soft);
+  max-width: 62ch;
+}
+
+/* ---------- 6. Accessibility ------------------------------------------- */
+/* A focus ring that is actually visible on a dark ground. Never remove an
+   outline without putting something in its place. */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* First tab stop on every page */
+.skip-link {
+  position: absolute;
+  left: var(--sp-4);
+  top: -100%;
+  z-index: 200;
+  padding: .65rem 1.1rem;
+  background: var(--amber);
+  color: #0a0e17;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: top var(--dur) var(--ease);
+}
+.skip-link:focus { top: var(--sp-4); }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- 7. Respect prefers-reduced-motion --------------------------- */
+/* Kill every transition and animation, and drop smooth scrolling.
+   JS checks the same query again to switch off Three.js, tilt and the
+   page transition entirely. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- 8. CRT overlay ---------------------------------------------
+   Scanlines and film grain across everything, sitting above content but
+   below nothing clickable (pointer-events: none). Two separate layers so
+   the grain can stay static while the scanlines drift.
+   Deliberately weak - you should notice it only if you look for it.
+   --------------------------------------------------------------------- */
+html::before,
+html::after {
+  content: "";
+  position: fixed;
+  inset: -50% 0 -50%;
+  z-index: 900;
+  pointer-events: none;
+}
+
+/* scanlines: 1px dark band every 3px, crawling very slowly */
+html::before {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, .30) 0 1px,
+    transparent 1px 3px
+  );
+  opacity: .55;
+  animation: crt-drift 9s linear infinite;
+}
+
+/* grain: one tile of SVG noise, repeated. Cheap and never animates. */
+html::after {
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  opacity: .05;
+  mix-blend-mode: overlay;
+}
+
+@keyframes crt-drift {
+  to { transform: translateY(3px); }
+}
+
+/* The overlay is decoration. If someone asked for less motion, freeze the
+   scanlines; if they are on a coarse pointer (phone) drop the grain, since
+   it costs a full-screen composite for something nobody sees at that size. */
+@media (prefers-reduced-motion: reduce) {
+  html::before { animation: none; }
+}
+
+@media (pointer: coarse) {
+  html::after { display: none; }
+}
+
+/* ---------- 9. Thai text ------------------------------------------------
+   Thai needs its own metrics. The Latin display face has no Thai glyphs, and
+   the tight tracking and 1.08 leading that suit it will clip the vowel and
+   tone marks that sit above and below the baseline.
+
+   Mark Thai runs with lang="th" and they get the right face, normal tracking
+   and room to breathe. cards.js sets the attribute automatically on any
+   project title that contains Thai.
+   --------------------------------------------------------------------- */
+:lang(th) {
+  font-family: var(--font-thai);
+  letter-spacing: normal;
+}
+
+h1:lang(th),
+h2:lang(th),
+h3:lang(th),
+h4:lang(th) {
+  line-height: 1.34;
+  font-weight: 600;
+}
+
+/* Thai has no uppercase, so the transform is a no-op that only widens the
+   letterspacing of any Latin sitting beside it. */
+:lang(th).eyebrow,
+:lang(th).chip,
+:lang(th).btn { text-transform: none; }

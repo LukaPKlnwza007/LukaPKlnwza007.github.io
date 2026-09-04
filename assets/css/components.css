@@ -1,0 +1,1053 @@
+/* ============================================================================
+   components.css - the UI pieces every page reuses
+   buttons, chips, cards, HUD panels, nav, forms, timeline, skills, footer
+   Loads after base.css, which owns the custom properties it reads.
+   ========================================================================= */
+
+/* ---------- 1. Monospaced system labels --------------------------------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  opacity: .55;
+}
+
+/* Status LED: a glowing dot that says something is live */
+.led {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 3px rgba(94, 234, 212, .12), 0 0 12px var(--mint);
+  flex: none;
+  animation: led-pulse 2.6s var(--ease) infinite;
+}
+
+.led--amber {
+  background: var(--amber);
+  box-shadow: 0 0 0 3px var(--amber-glow), 0 0 12px var(--amber);
+}
+
+/* ---------- 2. HUD panel (the shape the whole theme leans on) ---------- */
+/* Cut corner plus corner ticks, so it reads as instrumentation, not a card */
+.panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .022), transparent 42%),
+    var(--bg-panel);
+  border: 1px solid var(--line);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  padding: var(--sp-5);
+  box-shadow: var(--shadow-panel);
+}
+
+/* Corner ticks drawn with pseudo-elements rather than extra markup */
+.panel::before,
+.panel::after {
+  content: "";
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  pointer-events: none;
+  opacity: .75;
+}
+.panel::before {
+  top: 9px; left: 9px;
+  border-top: 1px solid var(--line-amber);
+  border-left: 1px solid var(--line-amber);
+}
+.panel::after {
+  right: 9px; bottom: 9px;
+  border-right: 1px solid var(--line-amber);
+  border-bottom: 1px solid var(--line-amber);
+}
+
+.panel--flat { box-shadow: none; background: rgba(13, 18, 32, .55); }
+
+/* Panel header, styled like a toolbar */
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  border-bottom: 1px dashed var(--line);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.panel-head .spacer { margin-left: auto; }
+
+/* ---------- 3. Section heading ------------------------------------------ */
+.sec-head {
+  display: grid;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
+}
+
+.sec-head__row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+/* A hairline running out to the edge, borrowed from circuit diagrams */
+.sec-head__row::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line-strong), transparent);
+}
+
+/* ---------- 4. Buttons -------------------------------------------------- */
+.btn {
+  --btn-fg: #0a0e17;
+  --btn-bg: var(--amber);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .78rem 1.35rem;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  overflow: hidden;
+  transition:
+    transform var(--dur-fast) var(--ease),
+    filter var(--dur-fast) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+/* Micro-interaction: a band of light crosses the button on hover, rather
+   than the usual colour swap and nothing else */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .45) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 12px 28px -14px var(--amber);
+}
+.btn:hover::after { transform: translateX(120%); }
+.btn:active { transform: translateY(0) scale(.985); }
+
+.btn--ghost {
+  --btn-fg: var(--mint);
+  --btn-bg: transparent;
+  border: 1px solid var(--line-strong);
+}
+.btn--ghost:hover {
+  background: rgba(94, 234, 212, .08);
+  box-shadow: 0 12px 28px -18px var(--mint);
+}
+
+.btn__arrow { transition: transform var(--dur) var(--ease); }
+.btn:hover .btn__arrow { transform: translateX(4px); }
+
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  opacity: .45;
+  pointer-events: none;
+}
+
+/* ---------- 5. Chip / tag ----------------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .3rem .68rem;
+  border: 1px solid var(--line);
+  background: rgba(94, 234, 212, .04);
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.chip--btn { cursor: pointer; }
+.chip--btn:hover {
+  color: var(--mint);
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+.chip[aria-pressed="true"] {
+  color: #0a0e17;
+  background: var(--mint);
+  border-color: var(--mint);
+  font-weight: 600;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+/* ---------- 6. Navigation ----------------------------------------------- */
+.nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 90;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    height var(--dur) var(--ease),
+    background var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+}
+
+/* main.js adds this past 24px of scroll: the bar shrinks and gains a backdrop */
+.nav.is-stuck {
+  height: 56px;
+  background: rgba(8, 12, 20, .82);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: var(--line);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  width: min(100% - 2.5rem, var(--shell));
+  margin-inline: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.brand__mark { color: var(--amber); }
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  margin-left: auto;
+}
+
+.nav__link {
+  position: relative;
+  padding: .5rem .8rem;
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+/* Underline that grows from the middle out */
+.nav__link::after {
+  content: "";
+  position: absolute;
+  left: .8rem; right: .8rem; bottom: .18rem;
+  height: 1px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: 50% 50%;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.nav__link:hover { color: var(--text); }
+.nav__link:hover::after { transform: scaleX(1); }
+
+.nav__link[aria-current="page"] { color: var(--amber); }
+.nav__link[aria-current="page"]::after { transform: scaleX(1); }
+
+.nav__cta { margin-left: var(--sp-2); }
+
+/* Mobile menu button: two rules that fold into a cross */
+.nav__toggle {
+  display: none;
+  margin-left: auto;
+  width: 42px; height: 42px;
+  border: 1px solid var(--line);
+  align-items: center;
+  justify-content: center;
+}
+.nav__toggle span {
+  position: relative;
+  display: block;
+  width: 18px; height: 1.5px;
+  background: var(--text);
+  transition: background var(--dur-fast) linear;
+}
+.nav__toggle span::before,
+.nav__toggle span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px; height: 1.5px;
+  background: var(--text);
+  transition: transform var(--dur) var(--ease);
+}
+.nav__toggle span::before { top: -6px; }
+.nav__toggle span::after  { top: 6px; }
+
+.nav__toggle[aria-expanded="true"] span { background: transparent; }
+.nav__toggle[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
+.nav__toggle[aria-expanded="true"] span::after  { transform: translateY(-6px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  .nav__toggle { display: flex; }
+
+  .nav__links {
+    position: fixed;
+    inset: var(--nav-h) 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--sp-4) 1.25rem var(--sp-6);
+    background: rgba(8, 12, 20, .97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-12px);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      transform var(--dur) var(--ease-out),
+      opacity var(--dur) var(--ease),
+      visibility var(--dur) linear;
+  }
+
+  .nav__links.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav__link {
+    padding: .9rem .2rem;
+    font-size: .95rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__link::after { display: none; }
+  .nav__cta { margin: var(--sp-4) 0 0; justify-content: center; }
+}
+
+/* ---------- 7. Scroll progress + custom cursor -------------------------- */
+.scroll-progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 95;
+  width: 100%;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--mint), var(--amber));
+  will-change: transform;
+}
+
+
+/* ---------- 8. Boot sequence (index.html) ------------------------------- */
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-5);
+  background: var(--bg-inset);
+  text-align: center;
+  transition: opacity 420ms var(--ease), visibility 420ms linear;
+}
+
+.boot.is-done { opacity: 0; visibility: hidden; }
+
+.boot .eyebrow { justify-content: center; }
+
+/* ---- The name across the middle of the boot screen ---------------------
+   main.js splits the text into words and then into graphemes (via
+   Intl.Segmenter, so combining marks stay attached) and animates each one. */
+.boot__mark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 1.2rem + 4.6vw, 4.1rem);
+  line-height: 1.06;
+  letter-spacing: -.02em;
+  color: #f2f6fd;
+  max-width: min(92vw, 16ch);
+}
+
+/* Wrapped per word, so a line break never lands mid-word */
+.boot__word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-right: .3em;
+}
+.boot__word:last-child { margin-right: 0; }
+
+.boot__letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(.42em);
+  animation: boot-letter 440ms var(--ease-out) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.boot__sub {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--mint);
+  opacity: 0;
+  animation: boot-fade 520ms var(--ease-out) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+.boot__log {
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  line-height: 2;
+  color: var(--text-mute);
+  text-align: left;
+  min-width: min(84vw, 340px);
+  min-height: 6.5em;   /* reserved, so new log lines do not shift the layout */
+}
+.boot__log b { color: var(--mint); font-weight: 500; }
+
+.boot__bar {
+  position: relative;
+  height: 2px;
+  background: rgba(94, 234, 212, .16);
+  overflow: hidden;
+}
+.boot__bar i {
+  position: absolute;
+  inset: 0 100% 0 0;
+  background: linear-gradient(90deg, var(--mint), var(--amber));
+  transition: right 180ms linear;
+}
+
+.boot__pct {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .2em;
+  color: var(--amber);
+  text-align: right;
+}
+
+/* The way out of the boot screen. Quiet, and it fades in late so it reads as
+   an offer rather than an instruction. */
+.boot__skip {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  animation: boot-skip-in 600ms var(--ease-out) 700ms both;
+}
+
+@keyframes boot-skip-in {
+  from { opacity: 0; }
+  to   { opacity: .8; }
+}
+
+/* ---------- 9. Project card (3D tilt plus spotlight) -------------------- */
+/* card-tilt.js writes the pointer position into --mx and --my */
+.card {
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition:
+    transform var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Spotlight over the whole card, but transparent to clicks */
+.card__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(320px circle at var(--mx) var(--my), rgba(255, 180, 84, .16), transparent 62%);
+  transition: opacity var(--dur) var(--ease);
+}
+.card:hover .card__glow,
+.card:focus-within .card__glow { opacity: 1; }
+
+.card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg-inset);
+  border-bottom: 1px solid var(--line);
+}
+
+.card__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.card:hover .card__media img { transform: scale(1.05); }
+
+/* Index number, top right of the artwork */
+.card__index {
+  position: absolute;
+  top: .7rem; right: .8rem;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .18em;
+  color: var(--amber);
+  background: rgba(8, 12, 20, .78);
+  padding: .18rem .5rem;
+  border: 1px solid var(--line-amber);
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-4) var(--sp-5);
+  flex: 1;
+  transform: translateZ(24px);   /* lifts the text as the card tilts, which is what sells the depth */
+}
+
+.card__meta {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.card__title { font-size: 1.22rem; }
+
+.card__desc {
+  font-size: .9rem;
+  color: var(--text-soft);
+  flex: 1;
+}
+
+/* Stretched link: the whole card is clickable, Tab order unaffected */
+.card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+}
+
+.card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mint);
+}
+.card__cta span { transition: transform var(--dur) var(--ease); }
+.card:hover .card__cta span { transform: translateX(5px); }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr));
+  gap: var(--sp-5);
+}
+
+/* ---------- 10. Timeline (about.html) ----------------------------------- */
+.timeline {
+  position: relative;
+  display: grid;
+  gap: var(--sp-6);
+  padding-left: 2.6rem;
+}
+
+/* A faint rail plus a line that fills with scroll (--progress from about-page.js) */
+.timeline::before,
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: .4rem;
+  bottom: .4rem;
+  width: 1px;
+}
+.timeline::before { background: var(--line); }
+.timeline::after {
+  background: linear-gradient(180deg, var(--mint), var(--amber));
+  transform: scaleY(var(--progress, 0));
+  transform-origin: 50% 0;
+  transition: transform 120ms linear;
+}
+
+.tl-item { position: relative; }
+
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: -2.6rem;
+  top: .55rem;
+  width: 19px; height: 19px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  border-radius: 50%;
+  transition: border-color var(--dur) var(--ease);
+}
+.tl-item::after {
+  content: "";
+  position: absolute;
+  left: calc(-2.6rem + 6px);
+  top: calc(.55rem + 6px);
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--text-mute);
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+/* Markers the progress line has passed light up */
+.tl-item.is-lit::before { border-color: var(--amber); }
+.tl-item.is-lit::after {
+  background: var(--amber);
+  box-shadow: 0 0 12px var(--amber);
+}
+
+.tl-item__year {
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  letter-spacing: .18em;
+  color: var(--amber);
+}
+
+.tl-item__role { margin-top: .3rem; }
+
+.tl-item__org {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--mint);
+  margin-bottom: .5rem;
+}
+
+.tl-item__desc { color: var(--text-soft); font-size: .93rem; }
+
+/* ---------- 11. Skills list (about.html) --------------------------------
+   Names only. The old version of this was a radar chart plus percentage
+   meters; both were drawing invented numbers with a lot of confidence.
+   --------------------------------------------------------------------- */
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.skill {
+  padding: .55rem .9rem;
+  border: 1px solid var(--line);
+  background: rgba(94, 234, 212, .03);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text);
+  /* Same clipped corner as .panel, one size down */
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.skill:hover {
+  border-color: var(--line-amber);
+  color: var(--amber);
+}
+
+/* ---------- 12. ฟอร์มติดต่อ (contact.html) ------------------------------ */
+.field { display: grid; gap: .45rem; margin-bottom: var(--sp-4); }
+
+.field__label {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.field__label .req { color: var(--amber); }
+
+.field__input {
+  width: 100%;
+  padding: .8rem .9rem;
+  background: var(--bg-inset);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: .9rem;
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.field__input::placeholder { color: #78879e; }   /* 5.0:1 on the input ground */
+.field__input:hover { border-color: var(--line-strong); }
+.field__input:focus { border-color: var(--amber); background: #0a0f1a; }
+
+textarea.field__input { resize: vertical; min-height: 150px; line-height: 1.65; }
+
+.field__err {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--danger);
+  min-height: 1.1em;   /* reserved, so showing an error does not shift the field */
+}
+
+.field.is-invalid .field__input { border-color: var(--danger); }
+
+.field__count {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--text-mute);
+  text-align: right;
+}
+
+/* Submit status, shown inline. Never alert(). */
+.form-status {
+  display: none;
+  align-items: flex-start;
+  gap: .7rem;
+  padding: .85rem 1rem;
+  margin-bottom: var(--sp-4);
+  border: 1px solid var(--line);
+  background: rgba(94, 234, 212, .05);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  line-height: 1.6;
+}
+.form-status.is-shown { display: flex; }
+.form-status[data-state="error"] {
+  border-color: rgba(255, 107, 107, .45);
+  background: rgba(255, 107, 107, .07);
+  color: #ffc2c2;
+}
+.form-status[data-state="ok"] {
+  border-color: var(--line-strong);
+  color: var(--mint);
+}
+
+/* Spinner inside the submit button */
+.spinner {
+  width: 13px; height: 13px;
+  border: 2px solid rgba(10, 14, 23, .3);
+  border-top-color: #0a0e17;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+/* ---------- 13. รายการข้อมูล / เมตา ------------------------------------- */
+.data-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--sp-4) var(--sp-5);
+}
+
+.data-row {
+  display: grid;
+  gap: .3rem;
+  font-family: var(--font-mono);
+  font-size: .82rem;
+}
+.data-row dt {
+  color: var(--text-mute);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: .7rem;
+  flex: none;
+}
+.data-row dd { color: var(--text); word-break: break-word; line-height: 1.5; }
+.data-row a {
+  color: var(--mint);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) linear;
+}
+.data-row a:hover { border-bottom-color: var(--mint); }
+
+/* ---------- 14. Pager (project-detail.html) ----------------------------- */
+.pager {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  border-top: 1px solid var(--line);
+  padding-top: var(--sp-5);
+}
+
+.pager__item {
+  display: grid;
+  gap: .3rem;
+  padding: var(--sp-4);
+  border: 1px solid var(--line);
+  transition:
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease-out),
+    background var(--dur) var(--ease);
+}
+.pager__item:hover {
+  border-color: var(--line-strong);
+  background: rgba(94, 234, 212, .04);
+  transform: translateY(-3px);
+}
+.pager__item--next { text-align: right; }
+.pager__dir {
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.pager__name { font-family: var(--font-display); font-size: 1.05rem; color: #fff; }
+
+/* ---------- 15. Footer -------------------------------------------------- */
+.footer {
+  border-top: 1px solid var(--line);
+  padding-block: var(--sp-6);
+  margin-top: var(--sp-8);
+}
+
+.footer__grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  color: var(--text-mute);
+  letter-spacing: .08em;
+}
+
+.footer__links { display: flex; flex-wrap: wrap; gap: var(--sp-4); }
+.footer__links a { transition: color var(--dur-fast) linear; }
+.footer__links a:hover { color: var(--mint); }
+
+/* ---------- 16. ยูทิลิตี้ ------------------------------------------------ */
+.grid-2 {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+  margin-top: .4rem;
+}
+
+.text-mint  { color: var(--mint); }
+.text-amber { color: var(--amber); }
+.text-mute  { color: var(--text-mute); }
+
+.link-underline {
+  color: var(--mint);
+  border-bottom: 1px solid rgba(94, 234, 212, .35);
+  transition: border-color var(--dur-fast) linear;
+}
+.link-underline:hover { border-bottom-color: var(--mint); }
+
+/* ---------- 17. Terminal-style labels ----------------------------------
+   Section headings read as shell commands rather than "SECTION 02".
+   The $ is generated so it never ends up in copied text or read aloud.
+   --------------------------------------------------------------------- */
+.eyebrow--cmd::before {
+  content: "$";
+  width: auto;
+  height: auto;
+  background: none;
+  color: var(--mint);
+  opacity: 1;
+  font-weight: 600;
+}
+
+.eyebrow--cmd { text-transform: none; letter-spacing: .12em; }
+
+/* ---------- 18. Glitch heading -----------------------------------------
+   Two offset copies of the text in mint and amber, normally hidden behind
+   the real glyphs. Every few seconds they slip sideways for ~200ms.
+   Needs data-text="" on the element carrying the same string.
+   --------------------------------------------------------------------- */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* clip to the same box so the copies never widen the layout */
+  overflow: hidden;
+}
+
+.glitch::before {
+  color: var(--mint);
+  animation: glitch-a 7s steps(1) infinite;
+}
+
+.glitch::after {
+  color: var(--amber);
+  animation: glitch-b 7s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch::before,
+  .glitch::after { display: none; }
+}
+
+
+/* ---------- 20. Inline hardware-style divider --------------------------- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-block: var(--sp-6);
+}
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  background: var(--line);
+}
+.divider::before { width: 34px; flex: none; }
+.divider::after  { flex: 1; }
+
+/* ---------- 21. Photography treatment -----------------------------------
+   Project imagery is duotoned into the palette by default and relaxes toward
+   its real colour on hover. Two jobs: it keeps a page of six different photos
+   feeling like one system, and it gives the card a reason to react to you.
+   --------------------------------------------------------------------- */
+.card__media img {
+  /* The photographs are real rooms, shot indoors and already dim. Full
+     desaturation at .68 brightness turned faces into shapes, so the resting
+     state keeps a little colour and most of the light. */
+  filter: grayscale(.8) contrast(1.04) brightness(.86);
+  transition:
+    filter var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+
+.card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(150deg,
+    rgba(94, 234, 212, .34) 0%,
+    rgba(10, 14, 23, .10) 52%,
+    rgba(255, 180, 84, .28) 100%);
+  mix-blend-mode: overlay;
+  transition: opacity var(--dur-slow) var(--ease);
+}
+
+.card:hover .card__media img,
+.card:focus-within .card__media img {
+  filter: grayscale(.12) contrast(1.02) brightness(.92);
+  transform: scale(1.04);
+}
+
+/* Two projects have a drawing instead of a photograph. The duotone treatment
+   exists to make unrelated photos agree with each other; a drawing already
+   uses the site palette, so desaturating it only makes it muddy. */
+.card__media img[src$=".svg"],
+.card:hover .card__media img[src$=".svg"],
+.card:focus-within .card__media img[src$=".svg"],
+.detail-hero__media img[src$=".svg"] {
+  filter: none;
+}
+.card:hover .card__media::after,
+.card:focus-within .card__media::after { opacity: .3; }
+
+/* ---------- 22. Wide card, used only by the pinned stack ---------------- */
+.card--wide .card__media { aspect-ratio: 16 / 9; }
+
+@media (min-width: 900px) {
+  .card--wide {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .card--wide .card__media {
+    aspect-ratio: auto;
+    height: 100%;
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+  }
+  .card--wide .card__body {
+    padding: var(--sp-6);
+    justify-content: center;
+  }
+  .card--wide .card__title { font-size: 1.9rem; }
+  .card--wide .card__desc  { font-size: .98rem; }
+}
+
+/* ---------- 23. Detail hero photography --------------------------------
+   Same duotone treatment as the cards, held at a lower brightness because
+   headline text sits directly on top of it.
+   --------------------------------------------------------------------- */
+.detail-hero__media img {
+  filter: grayscale(1) contrast(1.05) brightness(.55);
+}

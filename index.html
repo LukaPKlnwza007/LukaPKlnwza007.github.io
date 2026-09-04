@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Marks that scripts run. CSS uses this to decide whether to hide content
+     while waiting for scroll reveal, so a blocked script shows everything. -->
+<script>document.documentElement.classList.add("js");</script>
+<title>Denpoom Lothaisong</title>
+<meta name="description" content="Denpoom Lothaisong, Mathayom 5 at Loei Pittayakom School. Websites, and hardware that beeps at things. A traffic light with a sonar sensor, a geoinformatics competition, and this site.">
+<meta name="theme-color" content="#0a0e17">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Denpoom Lothaisong">
+<meta property="og:description" content="Websites, and hardware that beeps at things.">
+<meta property="og:image" content="assets/img/work-1.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+
+<!-- data.js first: everything else reads window.PORTFOLIO from it.
+     All deferred, so they run in order once the DOM is parsed. -->
+<script src="assets/js/data.js" defer></script>
+<script src="assets/js/cards.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/page-transitions.js" defer></script>
+<script src="assets/js/card-tilt.js" defer></script>
+<script src="assets/js/interactions.js" defer></script>
+<script src="assets/js/home.js" defer></script>
+<script src="assets/js/hero-3d.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="boot" data-boot role="status" aria-label="Loading">
+  <div class="boot__mark" data-boot-mark aria-hidden="true"></div>
+  <p class="boot__sub" data-boot-sub></p>
+  <div class="boot__log" data-boot-log aria-hidden="true"></div>
+  <div class="boot__bar"><i data-boot-bar></i></div>
+  <div class="boot__pct" data-boot-pct>000%</div>
+</div>
+
+<div class="scroll-progress" data-progress aria-hidden="true"></div>
+<div class="page-veil" data-veil aria-hidden="true"></div>
+
+<!-- Decorative only: breaks the centred-column symmetry on wide screens. -->
+
+<header class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="brand" href="index.html">
+      <span><span class="brand__mark">&#9670;</span> <span data-bind="identity.callsign">DENPOOM</span></span>
+    </a>
+
+    <button class="nav__toggle" type="button" data-nav-toggle
+            aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+      <span aria-hidden="true"></span>
+    </button>
+
+    <nav class="nav__links" id="nav-links" data-nav-links aria-label="Main">
+      <a class="nav__link" href="index.html">index</a>
+      <a class="nav__link" href="about.html">about</a>
+      <a class="nav__link" href="projects.html">work</a>
+      <a class="nav__link" href="contact.html">contact</a>
+      <a class="btn nav__cta" href="contact.html">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="page-shell">
+
+  <section class="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <span class="scanline" aria-hidden="true"></span>
+
+    <div class="shell hero__inner">
+      <div>
+        <p class="eyebrow eyebrow--cmd">whoami</p>
+
+        <h1 class="hero__title">
+          <span class="glitch" data-text="Denpoom">Denpoom</span><br>
+          <em>Lothaisong</em>
+        </h1>
+
+        <p class="lede" style="margin-top:1rem" data-bind="identity.tagline"></p>
+
+        <div class="hero__actions">
+          <a class="btn" href="projects.html" data-magnet>
+            See the work <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <a class="btn btn--ghost" href="contact.html">Get in touch</a>
+        </div>
+      </div>
+
+      <aside class="hero__hud" aria-label="Who this is, and current status">
+
+        <!-- Name card: whose site this is, with a photo so it is a person and
+             not a callsign. Text comes from identity in data.js. -->
+        <div class="panel id-card">
+          <div class="panel-head">
+            <span>IDENTITY</span>
+          </div>
+          <div class="id-card__row">
+            <img class="id-card__photo"
+                 src="assets/img/profile.jpg"
+                 alt="Portrait of Denpoom Lothaisong"
+                 width="88" height="88" loading="eager" decoding="async">
+            <div>
+              <p class="id-card__name" data-bind="identity.name">Denpoom Lothaisong</p>
+              <p class="id-card__role" data-bind="identity.role">Websites, and hardware that beeps at things</p>
+              <p class="id-card__loc" data-bind="identity.location">Loei, Thailand</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <span>CURRENT</span>
+          </div>
+          <div class="hud-rows">
+            <div class="hud-row"><span>Available</span><b data-bind="identity.availableText">Free after school</b></div>
+            <div class="hud-row"><span>Works on</span><b data-bind="identity.roleShort">Web / Hardware</b></div>
+            <div class="hud-row"><span>Replies</span><b>After school</b></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track" data-ticker></div>
+  </div>
+
+  <section class="section shell" aria-labelledby="work-title">
+    <div class="sec-head" data-reveal>
+      <div class="sec-head__row">
+        <span class="eyebrow eyebrow--cmd">ls ./work --featured</span>
+      </div>
+      <h2 id="work-title">My Favorite Personal Works</h2>
+      <p class="lede">
+        A short list, because I am in M5 and I started recently. But everything
+        on it is something I actually made or actually turned up to.
+      </p>
+    </div>
+
+    <!-- home.js fills this from data.js -->
+    <div class="stack" data-featured></div>
+  </section>
+
+  <section class="section shell" aria-labelledby="work-index-title">
+    <div class="sec-head" data-reveal>
+      <div class="sec-head__row">
+        <span class="eyebrow eyebrow--cmd">ls ./work --all</span>
+      </div>
+      <h2 id="work-index-title">All my work and projects</h2>
+      <p class="lede">
+        Everything on the site, in one list. Pick a row and it opens that
+        project in the work section.
+      </p>
+    </div>
+
+    <!-- home.js fills this from data.js; each row links to projects.html#work-<id> -->
+    <ol class="work-index" data-work-index data-reveal></ol>
+
+    <p style="margin-top:2rem" data-reveal>
+      <a class="btn btn--ghost" href="projects.html">
+        Open the work section <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </p>
+  </section>
+
+  <section class="section shell" aria-labelledby="notes-title">
+    <div class="sec-head" data-reveal>
+      <div class="sec-head__row">
+      </div>
+      <h2 id="notes-title">How I actually build things</h2>
+    </div>
+
+    <div class="notes-grid">
+      <div class="prose" data-reveal>
+        <p>
+          I start with the smallest piece that can prove itself. On the traffic
+          light that meant getting the sensor to print one number and waving my
+          hand at it until the number made sense. Nothing else got wired until
+          that part was boring.
+        </p>
+        <p>
+          Then one thing at a time. This is not patience, it is self-defence.
+          The day I wired all of it at once and it did not work, I had three
+          suspects and no way to tell which one did it. Adding one piece at a
+          time means the thing that broke it is the thing I just touched.
+        </p>
+        <p>
+          I look things up constantly and I am not embarrassed about that. What
+          I try not to do is paste something in without understanding it, because
+          that works right until it does not, and then I am stuck with code I
+          cannot read in a project that is due tomorrow.
+        </p>
+      </div>
+
+      <aside class="panel panel--flat" data-reveal="right" aria-labelledby="nope-title">
+        <div class="panel-head">
+          <span id="nope-title">NOT YET</span>
+        </div>
+        <ul class="nope-list">
+          <li>Databases. I know they exist. That is roughly the extent of it.</li>
+          <li>JavaScript frameworks, until plain JavaScript stops surprising me.</li>
+          <li>Soldering that does not look like a crime scene.</li>
+          <li>3D modelling. Every attempt so far has come out like a melted chair.</li>
+        </ul>
+        <p class="mono text-mute" style="font-size:.72rem;line-height:1.8;margin-top:1.1rem">
+          This is the list of what is next, not a confession. I would rather
+          write down what I cannot do yet than pretend the list is empty.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section shell shell--tight">
+    <div class="panel" data-reveal="scale" style="text-align:center;padding:clamp(2rem,1.5rem+3vw,3.5rem)">
+      <h2 style="margin:1rem 0">Say hello</h2>
+      <p class="lede" style="margin:0 auto 1.75rem">
+        A question, a project, a competition that needs one more person, or a
+        note telling me something on this site is wrong. All welcome.
+      </p>
+      <a class="btn" href="contact.html" data-magnet>
+        Get in touch <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__grid">
+      <span>&copy; <span data-year>2026</span> <span data-bind="identity.name">Denpoom Lothaisong</span></span>
+
+      <nav class="footer__links" aria-label="Footer">
+        <a href="about.html">about</a>
+        <a href="projects.html">work</a>
+        <a href="contact.html">contact</a>
+        <a data-mailto href="#"></a>
+      </nav>
+
+      <span><span data-bind="identity.location">Loei, Thailand</span> &nbsp;·&nbsp; ICT</span>
+    </div>
+
+    <!-- Colophon. Small, but it is the kind of thing a person writes. -->
+    <p class="colophon">
+      Set in Space Grotesk and IBM Plex Mono. Hand-written HTML, CSS and
+      JavaScript, one Three.js scene, a Spring Boot endpoint behind the contact
+      form. No analytics, no cookie banner, nothing to accept.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

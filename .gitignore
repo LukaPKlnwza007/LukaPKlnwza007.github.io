@@ -1,0 +1,10 @@
+# Build output and local data from the Spring Boot service
+backend/target/
+backend/data/
+*.log
+
+# Editors and OS
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

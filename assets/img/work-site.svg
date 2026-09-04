@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 875" width="1400" height="875" role="img" aria-label="A browser window over a grid, with a page being laid out inside it">
+  <defs>
+    <pattern id="site-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#5eead4" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="site-glow" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#ffb454" stop-opacity=".13"/>
+      <stop offset="100%" stop-color="#ffb454" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1400" height="875" fill="#0a0e17"/>
+  <rect width="1400" height="875" fill="url(#site-grid)"/>
+  <ellipse cx="700" cy="380" rx="560" ry="400" fill="url(#site-glow)"/>
+
+  <!-- Browser chrome -->
+  <g>
+    <path d="M170 130 h980 l0 0 v560 h-980 z" fill="#0d1220" stroke="#5eead4" stroke-opacity=".3" stroke-width="2"/>
+    <line x1="170" y1="204" x2="1150" y2="204" stroke="#5eead4" stroke-opacity=".3" stroke-width="2"/>
+    <circle cx="212" cy="167" r="9" fill="#ff6b6b" fill-opacity=".7"/>
+    <circle cx="246" cy="167" r="9" fill="#ffb454" fill-opacity=".7"/>
+    <circle cx="280" cy="167" r="9" fill="#5eead4" fill-opacity=".7"/>
+    <rect x="320" y="152" width="500" height="30" rx="15" fill="#080c14" stroke="#5eead4" stroke-opacity=".18"/>
+  </g>
+
+  <!-- The page inside: a hero block, then a grid of cards -->
+  <g>
+    <rect x="212" y="248" width="420" height="34" fill="#dce4f2" fill-opacity=".78"/>
+    <rect x="212" y="300" width="300" height="34" fill="#ffb454" fill-opacity=".55"/>
+    <rect x="212" y="364" width="540" height="12" fill="#9fb0c9" fill-opacity=".35"/>
+    <rect x="212" y="392" width="470" height="12" fill="#9fb0c9" fill-opacity=".35"/>
+    <rect x="212" y="440" width="170" height="44" fill="#ffb454" fill-opacity=".85"/>
+    <rect x="402" y="440" width="170" height="44" fill="none" stroke="#5eead4" stroke-opacity=".55" stroke-width="2"/>
+
+    <rect x="860" y="248" width="252" height="236" fill="#101728" stroke="#5eead4" stroke-opacity=".28" stroke-width="2"/>
+    <circle cx="912" cy="300" r="26" fill="#5eead4" fill-opacity=".2" stroke="#5eead4" stroke-opacity=".5" stroke-width="2"/>
+    <rect x="886" y="352" width="200" height="10" fill="#9fb0c9" fill-opacity=".3"/>
+    <rect x="886" y="378" width="150" height="10" fill="#9fb0c9" fill-opacity=".3"/>
+    <rect x="886" y="420" width="110" height="10" fill="#ffb454" fill-opacity=".5"/>
+
+    <g fill="#101728" stroke="#5eead4" stroke-opacity=".22" stroke-width="2">
+      <rect x="212" y="536" width="288" height="118"/>
+      <rect x="556" y="536" width="288" height="118"/>
+      <rect x="900" y="536" width="212" height="118"/>
+    </g>
+    <g fill="#9fb0c9" fill-opacity=".3">
+      <rect x="238" y="566" width="150" height="10"/>
+      <rect x="238" y="592" width="210" height="10"/>
+      <rect x="582" y="566" width="150" height="10"/>
+      <rect x="582" y="592" width="210" height="10"/>
+      <rect x="926" y="566" width="130" height="10"/>
+      <rect x="926" y="592" width="160" height="10"/>
+    </g>
+  </g>
+
+  <text x="170" y="762" fill="#5eead4" fill-opacity=".7"
+        font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="27" letter-spacing="6">
+    &lt;!doctype html&gt; &#183; no framework &#183; no build step
+  </text>
+</svg>

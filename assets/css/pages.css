@@ -1,0 +1,575 @@
+/* ============================================================================
+   pages.css - layout that belongs to one page (hero, about, work, detail, contact)
+   Split from components.css because none of it is reused anywhere else.
+   ========================================================================= */
+
+/* ---------- Shared page frame ------------------------------------------ */
+.page-shell { padding-top: var(--nav-h); }
+
+/* Sub-page header (about / work / contact) */
+.page-head {
+  display: grid;
+  gap: var(--sp-4);
+  padding-block: clamp(2.5rem, 1.5rem + 5vw, 5rem) var(--sp-6);
+  border-bottom: 1px solid var(--line);
+}
+
+.page-head__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.page-head__meta b { color: var(--mint); font-weight: 500; }
+
+/* ============================================================================
+   index.html - HERO
+   ========================================================================= */
+.hero {
+  position: relative;
+  min-height: min(92dvh, 860px);
+  display: grid;
+  align-items: center;
+  padding-block: var(--sp-7) var(--sp-6);
+  overflow: hidden;
+}
+
+/* The Three.js canvas sits behind everything and ignores the pointer, so it
+   never gets in the way of selecting text. */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Faded on the left so the headline keeps its contrast */
+  -webkit-mask-image: radial-gradient(110% 100% at 72% 46%, #000 22%, transparent 76%);
+          mask-image: radial-gradient(110% 100% at 72% 46%, #000 22%, transparent 76%);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+
+@media (min-width: 980px) {
+  .hero__inner { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); }
+}
+
+.hero__title {
+  margin-block: var(--sp-4);
+  /* The surname ends in a descender. 1.08 from the global heading rule lets
+     the g hang outside its own box, which anything with overflow:hidden
+     downstream would clip. Loosen the leading and reserve the space. */
+  line-height: 1.12;
+  padding-bottom: .08em;
+}
+
+/* Outlined rather than filled on the second line, for a change of weight */
+.hero__title em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--amber);
+}
+
+.hero__role {
+  font-family: var(--font-mono);
+  font-size: clamp(.8rem, .75rem + .3vw, .95rem);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--mint);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-5);
+}
+
+/* Status panel to the right of the hero: the thing that says "instrument" */
+.hero__hud {
+  position: relative;
+  display: grid;
+  gap: var(--sp-4);
+}
+.hero__hud .panel { padding: var(--sp-4); }
+
+/* Name card: portrait, name, role, place. Sits above the status rows. */
+.id-card__row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.id-card__photo {
+  flex: none;
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border: 1px solid var(--line-amber);
+  /* Same clipped corner as .panel, so the portrait belongs to the instrument */
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  filter: grayscale(1) contrast(1.05) brightness(.92);
+  transition: filter var(--dur) var(--ease-out);
+}
+.id-card:hover .id-card__photo { filter: none; }
+
+.id-card__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1rem + .4vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.id-card__role,
+.id-card__loc {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  line-height: 1.6;
+  color: var(--text-mute);
+  margin-top: .35rem;
+}
+
+.id-card__loc { color: var(--mint-dim); }
+
+@media (max-width: 400px) {
+  .id-card__photo { width: 64px; height: 64px; }
+}
+
+.hud-rows {
+  display: grid;
+  gap: .55rem;
+  font-family: var(--font-mono);
+  font-size: .74rem;
+}
+.hud-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  justify-content: space-between;
+  color: var(--text-mute);
+}
+.hud-row b { color: var(--text); font-weight: 500; }
+
+/* กรอบเรืองรอบแผง HUD */
+.hero__hud::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border: 1px solid var(--line);
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
+  animation: breathe 5s var(--ease) infinite;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Work index on the home page. Every project as one row, linking into
+   projects.html#work-<id>. Reads as a directory listing rather than a menu.
+   ------------------------------------------------------------------------ */
+.work-index {
+  border-top: 1px solid var(--line);
+}
+
+.work-index__item { border-bottom: 1px solid var(--line); }
+
+.work-index__link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-3);
+  transition:
+    background-color var(--dur) var(--ease-out),
+    padding-left var(--dur) var(--ease-out);
+}
+
+.work-index__link:hover,
+.work-index__link:focus-visible {
+  background: rgba(94, 234, 212, .05);
+  padding-left: var(--sp-5);
+}
+
+.work-index__num {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .16em;
+  color: var(--amber);
+}
+
+.work-index__body { display: grid; gap: .2rem; min-width: 0; }
+
+.work-index__name {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.work-index__desc {
+  font-size: .86rem;
+  line-height: 1.5;
+  color: var(--text-mute);
+}
+
+.work-index__meta {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--text-mute);
+}
+
+.work-index__go {
+  font-family: var(--font-mono);
+  color: var(--mint);
+  opacity: .5;
+  transition: transform var(--dur) var(--ease-out), opacity var(--dur) linear;
+}
+
+.work-index__link:hover .work-index__go,
+.work-index__link:focus-visible .work-index__go {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+/* Under ~560px the year would squeeze the tagline, so it drops out. */
+@media (max-width: 560px) {
+  .work-index__link { gap: var(--sp-3); }
+  .work-index__meta { display: none; }
+}
+
+/* ============================================================================
+   about.html
+   ========================================================================= */
+.about-grid {
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 940px) {
+  .about-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; }
+}
+
+.prose { max-width: 68ch; }
+.prose p + p { margin-top: var(--sp-4); }
+.prose p { color: var(--text-soft); }
+
+/* รายการหลักการทำงาน */
+.principles { display: grid; gap: var(--sp-4); counter-reset: p; }
+
+.principle {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-4);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px dashed var(--line);
+}
+.principle:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.principle::before {
+  counter-increment: p;
+  content: "0" counter(p);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  color: var(--amber);
+  padding-top: .18rem;
+}
+
+.principle h4 { margin-bottom: .25rem; }
+.principle p { color: var(--text-soft); font-size: .92rem; }
+
+/* ============================================================================
+   projects.html
+   ========================================================================= */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-block: var(--sp-5);
+  position: sticky;
+  top: 56px;
+  z-index: 20;
+  background: linear-gradient(180deg, var(--bg) 72%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.filter-bar__label {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+.filter-bar__count {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  color: var(--mint);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .filter-bar { position: static; }
+  .filter-bar__count { margin-left: 0; width: 100%; }
+}
+
+/* ============================================================================
+   project-detail.html
+   ========================================================================= */
+.detail-hero {
+  position: relative;
+  min-height: clamp(320px, 46dvh, 520px);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--sp-7) 0 var(--sp-6);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Full-bleed image behind a gradient heavy enough to read text over */
+.detail-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.detail-hero__media img,
+.detail-hero__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .38;
+}
+.detail-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 14, 23, .55), rgba(10, 14, 23, .92) 78%),
+    linear-gradient(90deg, rgba(10, 14, 23, .9), transparent 62%);
+}
+
+.detail-hero__inner { display: grid; gap: var(--sp-4); }
+
+.detail-body {
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .detail-body { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+  /* แผงข้อมูลด้านขวาเกาะติดขณะเลื่อนอ่านเนื้อหายาว */
+  .detail-aside { position: sticky; top: calc(56px + var(--sp-4)); }
+}
+
+/* บล็อกเนื้อหา: โจทย์ → กระบวนการ → ผลลัพธ์ */
+.case-block { display: grid; gap: var(--sp-3); }
+.case-block + .case-block {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-6);
+  border-top: 1px dashed var(--line);
+}
+
+.case-block__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+}
+.case-block__title span {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .18em;
+  color: var(--amber);
+}
+
+.case-block p { color: var(--text-soft); }
+
+/* รายการผลลัพธ์เชิงตัวเลข */
+/* What I learned. This used to be a row of big mint numbers, which on school
+   work meant inventing a statistic to put in them. Sentences instead. */
+.learned-list { display: grid; gap: var(--sp-3); }
+.learned-list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-3);
+  color: var(--text-soft);
+  font-size: .93rem;
+}
+.learned-list li::before {
+  content: "\2192";                 /* → */
+  font-family: var(--font-mono);
+  color: var(--mint);
+  padding-top: .05rem;
+}
+
+/* Photo grid on the detail page, for projects that have pictures */
+.photo-grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+.photo { margin: 0; }
+
+.photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  filter: grayscale(.55) brightness(.9);
+  transition: filter var(--dur-slow) var(--ease-out);
+}
+.photo:hover img { filter: none; }
+
+.photo figcaption {
+  margin-top: .6rem;
+  font-size: .82rem;
+  line-height: 1.6;
+  color: var(--text-mute);
+}
+
+/* Numbered process steps */
+.steps { display: grid; gap: var(--sp-3); counter-reset: s; }
+.steps li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-3);
+  color: var(--text-soft);
+  font-size: .93rem;
+}
+.steps li::before {
+  counter-increment: s;
+  content: counter(s, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  color: var(--amber);
+  padding-top: .18rem;
+}
+
+/* ============================================================================
+   contact.html
+   ========================================================================= */
+.contact-grid {
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 940px) {
+  .contact-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+}
+
+/* Honeypot: out of sight but still in the DOM. aria-hidden and tabindex="-1"
+   in the markup keep screen readers and the keyboard away from it. */
+.hp {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.social-list { display: grid; gap: 0; }
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: .85rem .2rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  transition: padding-left var(--dur) var(--ease), color var(--dur-fast) linear;
+}
+.social:last-child { border-bottom: 0; }
+.social:hover { color: var(--mint); padding-left: .7rem; }
+.social__arrow { margin-left: auto; color: var(--amber); }
+
+/* กล่องบอกสถานะรับงาน */
+.availability {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .7rem .9rem;
+  border: 1px solid var(--line-strong);
+  background: rgba(94, 234, 212, .05);
+  font-family: var(--font-mono);
+  font-size: .76rem;
+  letter-spacing: .1em;
+  color: var(--mint);
+}
+
+/* ============================================================================
+   404 / empty state (project-detail, when the id matches nothing)
+   ========================================================================= */
+.empty-state {
+  display: grid;
+  gap: var(--sp-4);
+  justify-items: start;
+  padding-block: var(--sp-8);
+}
+
+/* ============================================================================
+   index.html - working notes block
+   Deliberately uneven columns. Two matched halves is the layout that makes a
+   page look generated; the prose wants room and the list does not.
+   ========================================================================= */
+.notes-grid {
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .notes-grid { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); }
+}
+
+.nope-list {
+  display: grid;
+  gap: .85rem;
+  font-size: .92rem;
+  color: var(--text-soft);
+}
+
+.nope-list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .7rem;
+  align-items: start;
+}
+
+.nope-list li::before {
+  content: "\00d7";           /* multiplication sign, not a letter x */
+  font-family: var(--font-mono);
+  color: var(--danger);
+  line-height: 1.5;
+}
+
+/* ---------- Colophon ---------------------------------------------------- */
+.colophon {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: 1px dashed var(--line);
+  max-width: 66ch;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  line-height: 1.9;
+  color: var(--text-mute);
+}

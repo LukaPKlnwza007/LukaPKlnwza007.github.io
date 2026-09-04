@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add("js");</script>
+<!-- title and description get rewritten by project-detail.js per project -->
+<title>Project · Denpoom Lothaisong</title>
+<meta name="description" content="What I was trying to do, what I did, and what I learned on the way.">
+<meta name="theme-color" content="#0a0e17">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+
+<script src="assets/js/data.js" defer></script>
+<script src="assets/js/cards.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/page-transitions.js" defer></script>
+<script src="assets/js/interactions.js" defer></script>
+<script src="assets/js/project-detail.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="boot" data-boot role="status" aria-label="Loading">
+  <div class="boot__mark" data-boot-mark aria-hidden="true"></div>
+  <p class="boot__sub" data-boot-sub></p>
+  <div class="boot__log" data-boot-log aria-hidden="true"></div>
+  <div class="boot__bar"><i data-boot-bar></i></div>
+  <div class="boot__pct" data-boot-pct>000%</div>
+</div>
+
+<div class="scroll-progress" data-progress aria-hidden="true"></div>
+<div class="page-veil" data-veil aria-hidden="true"></div>
+
+<header class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="brand" href="index.html">
+      <span><span class="brand__mark">&#9670;</span> <span data-bind="identity.callsign">DENPOOM</span></span>
+    </a>
+    <button class="nav__toggle" type="button" data-nav-toggle
+            aria-expanded="false" aria-controls="nav-links" aria-label="Toggle menu">
+      <span aria-hidden="true"></span>
+    </button>
+    <nav class="nav__links" id="nav-links" data-nav-links aria-label="Main">
+      <a class="nav__link" href="index.html">index</a>
+      <a class="nav__link" href="about.html">about</a>
+      <a class="nav__link" href="projects.html">work</a>
+      <a class="nav__link" href="contact.html">contact</a>
+      <a class="btn nav__cta" href="contact.html">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="page-shell">
+
+  <!-- Shown when ?id= is missing or does not match anything -->
+  <section class="shell empty-state" data-detail-missing hidden>
+    <p class="eyebrow eyebrow--cmd">stat: no such file</p>
+    <h1>That project is not here</h1>
+    <p class="lede">
+      Either the link is wrong or I moved it. The full list is one click away.
+    </p>
+    <a class="btn" href="projects.html" data-magnet>
+      See the work <span class="btn__arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </section>
+
+  <article data-detail>
+
+    <header class="detail-hero">
+      <div class="detail-hero__media" aria-hidden="true">
+        <!-- In the first viewport, so no lazy loading. Decorative: alt is empty
+             because the heading right below says the same thing. -->
+        <img data-field="cover" src="assets/img/work-1.jpg" alt="" width="1400" height="875" decoding="async">
+      </div>
+
+      <div class="shell detail-hero__inner">
+        <p class="eyebrow">
+          <a href="projects.html" style="color:inherit">&larr; all work</a>
+        </p>
+        <h1 data-field="name">Project</h1>
+        <p class="lede" data-field="tagline"></p>
+
+        <div class="page-head__meta" style="border:0;padding:0">
+          <span>year <b data-field="year"></b></span>
+          <span>role <b data-field="role"></b></span>
+          <span>duration <b data-field="duration"></b></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="section shell detail-body">
+
+      <div>
+        <section class="case-block" data-reveal aria-labelledby="p-problem">
+          <div class="case-block__title">
+            <span>01</span>
+            <h2 id="p-problem">The problem</h2>
+          </div>
+          <p data-field="problem"></p>
+        </section>
+
+        <section class="case-block" data-reveal aria-labelledby="p-process">
+          <div class="case-block__title">
+            <span>02</span>
+            <h2 id="p-process">What I did</h2>
+          </div>
+          <ol class="steps" data-field="process"></ol>
+        </section>
+
+        <section class="case-block" data-reveal aria-labelledby="p-learned">
+          <div class="case-block__title">
+            <span>03</span>
+            <h2 id="p-learned">What I learned</h2>
+          </div>
+          <ul class="learned-list" data-field="learned"></ul>
+        </section>
+
+        <!-- Only rendered when the project has a gallery in data.js -->
+        <section class="case-block" data-reveal aria-labelledby="p-photos" data-gallery-block hidden>
+          <div class="case-block__title">
+            <span>04</span>
+            <h2 id="p-photos">Photos</h2>
+          </div>
+          <div class="photo-grid" data-field="gallery"></div>
+        </section>
+      </div>
+
+      <!-- Sticky on wide screens so the facts stay put while you read -->
+      <aside class="detail-aside">
+        <div class="panel" data-reveal="right">
+          <div class="panel-head">
+            <span>PROJECT DATA</span>
+          </div>
+
+          <dl class="data-list">
+            <div class="data-row"><dt>Client</dt><dd data-field="client"></dd></div>
+            <div class="data-row"><dt>Kind</dt><dd data-field="category"></dd></div>
+            <div class="data-row"><dt>Year</dt><dd data-field="year"></dd></div>
+            <div class="data-row"><dt>Duration</dt><dd data-field="duration"></dd></div>
+          </dl>
+
+          <h3 style="margin:1.5rem 0 .75rem;font-size:.95rem">Built with</h3>
+          <div class="chip-row" data-field="tech"></div>
+
+          <div class="chip-row" style="margin-top:1.5rem" data-field="links"></div>
+        </div>
+      </aside>
+    </div>
+
+    <nav class="shell" aria-label="Other projects" style="padding-bottom:3rem">
+      <div class="pager" data-field="pager"></div>
+    </nav>
+
+  </article>
+
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__grid">
+      <span>&copy; <span data-year>2026</span> <span data-bind="identity.name">Denpoom Lothaisong</span></span>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="index.html">index</a>
+        <a href="about.html">about</a>
+        <a href="projects.html">work</a>
+        <a data-mailto href="#"></a>
+      </nav>
+      <span><span data-bind="identity.location">Loei, Thailand</span> &nbsp;·&nbsp; ICT</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,414 @@
+/* ============================================================================
+   animations.css - every keyframe, plus the states for scroll reveal,
+   page transitions and grid filtering. base.css already disables all
+   animation under prefers-reduced-motion, so nothing here repeats that guard.
+   ========================================================================= */
+
+/* ---------- 1. Keyframes ------------------------------------------------ */
+
+/* LED สถานะเต้นเบา ๆ */
+@keyframes led-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1); }
+  50%      { opacity: .45; transform: scale(.82); }
+}
+
+/* Sweep hand inside the cursor ring */
+@keyframes radar-sweep {
+  to { transform: rotate(360deg); }
+}
+
+/* Submit button spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Blinking caret for the boot log */
+@keyframes caret {
+  0%, 45%  { opacity: 1; }
+  50%, 95% { opacity: 0; }
+}
+
+/* Scan line travelling down the hero */
+@keyframes scanline {
+  0%   { transform: translateY(-12%); opacity: 0; }
+  12%  { opacity: .55; }
+  88%  { opacity: .55; }
+  100% { transform: translateY(760%); opacity: 0; }
+}
+
+/* Tech ticker marquee */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Slow breathing glow on the hero frame */
+@keyframes breathe {
+  0%, 100% { opacity: .35; }
+  50%      { opacity: .75; }
+}
+
+/* ---------- 2. Scroll reveal (Intersection Observer ใน main.js) ---------- */
+/* Start faded and nudged down; main.js adds .is-in on entry.
+   A transition rather than an animation, so it is reversible and cheap.
+   Every rule hangs off .js on <html>: no script, nothing hidden. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Other directions, used sparingly rather than on everything */
+.js [data-reveal="scale"] { transform: scale(.965); }
+
+/* Horizontal only once the layout is genuinely two columns. 960px covers
+   every breakpoint that uses it: about 940, contact 940, detail 960.
+   Below that the element is still full width, so sliding it sideways pushes
+   past the viewport and produces a temporary horizontal scrollbar.
+   Narrower screens fall back to the default translateY, which cannot. */
+@media (min-width: 960px) {
+  /* Both slide *inwards*, never out towards the edge:
+     .shell only leaves a 20px gutter until about 1280px wide, so a 26px
+     outward slide overruns the viewport every single time.
+     left/right name the column, not the direction of travel. */
+  .js [data-reveal="left"]  { transform: translateX(26px); }
+  .js [data-reveal="right"] { transform: translateX(-26px); }
+}
+
+/* Reduced motion: show everything at once */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+/* No JavaScript, whether blocked or broken: hide nothing, and do not let the
+   boot screen sit there forever with nobody to dismiss it. The .js class is
+   set by a one-line script in every page head. */
+html:not(.js) .boot { display: none; }
+
+/* ---------- 3. Page transition (page-transitions.js) -------------------- */
+/* An opaque veil rises over the page on the way out, instead of a white flash */
+.page-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 180, 84, .06), transparent 30%),
+    var(--bg-inset);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  transition: transform 380ms var(--ease-out);
+}
+
+/* Leaving: the veil grows up from the bottom edge */
+body.is-leaving .page-veil {
+  pointer-events: all;
+  transform: scaleY(1);
+}
+
+/* Arriving: content rises into place rather than appearing */
+.page-shell {
+  animation: page-enter 520ms var(--ease-out) both;
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell { animation: none; }
+  .page-veil  { display: none; }
+}
+
+/* ---------- 4. Work grid while filtering (projects-filter.js) ----------- */
+/* Filtered-out cards shrink and fade before they leave the layout.
+   The JS waits 240ms before setting hidden, so this gets to finish. */
+.card-grid .filter-item {
+  transition:
+    opacity 260ms var(--ease),
+    transform 260ms var(--ease-out);
+}
+
+.card-grid .filter-item.is-hidden {
+  opacity: 0;
+  transform: scale(.94) translateY(8px);
+  pointer-events: none;
+}
+
+.card-grid .filter-item[hidden] { display: none; }
+
+/* Arrived here from the home page's work index: hold a ring on the card for a
+   couple of seconds so it is obvious which one the link meant. */
+.card-grid .filter-item.is-linked .card {
+  outline: 1px solid var(--amber);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 6px var(--amber-glow);
+  animation: linked-pulse 2.6s var(--ease) 1;
+}
+
+@keyframes linked-pulse {
+  0%, 100% { box-shadow: 0 0 0 6px var(--amber-glow); }
+  50%      { box-shadow: 0 0 0 14px transparent; }
+}
+
+/* Shown when a filter matches nothing */
+.filter-empty {
+  display: none;
+  padding: var(--sp-7) var(--sp-4);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  color: var(--text-mute);
+  border: 1px dashed var(--line);
+}
+.filter-empty.is-shown { display: block; }
+
+/* ---------- 5. One-off effects ----------------------------------------- */
+
+/* Thin scan line crossing the hero */
+.scanline {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--mint), transparent);
+  opacity: 0;
+  animation: scanline 7s var(--ease) infinite;
+  pointer-events: none;
+}
+
+/* Blinking caret for the boot log and terminal labels */
+.caret {
+  display: inline-block;
+  width: .55em;
+  height: 1em;
+  vertical-align: -.13em;
+  background: var(--mint);
+  animation: caret 1.05s steps(1) infinite;
+}
+
+/* Endless ticker: the list appears twice and the track shifts by -50% */
+.ticker {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  padding-block: .7rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.ticker__track {
+  display: flex;
+  width: max-content;
+  gap: var(--sp-6);
+  animation: ticker 34s linear infinite;
+}
+
+.ticker:hover .ticker__track { animation-play-state: paused; }
+
+.ticker__item {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  font-family: var(--font-mono);
+  font-size: .74rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  white-space: nowrap;
+}
+.ticker__item::before { content: "▸"; color: var(--amber); }
+
+
+/* ---------- 6. Boot screen: letters arriving one at a time -------------- */
+/* Each glyph rises, flashes amber, then settles to its final colour, as if
+   something were checking them off one by one before opening the door. */
+@keyframes boot-letter {
+  0% {
+    opacity: 0;
+    transform: translateY(.42em);
+    color: var(--amber);
+  }
+  55% {
+    opacity: 1;
+    color: var(--amber);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+    color: #f2f6fd;
+  }
+}
+
+@keyframes boot-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- 7. Glitch offsets -------------------------------------------
+   Mostly transparent. The visible slips are short and infrequent on purpose:
+   a heading that shakes constantly is unreadable, and reads as a gimmick.
+   --------------------------------------------------------------------- */
+@keyframes glitch-a {
+  0%, 92%   { opacity: 0; transform: none; }
+  93%       { opacity: .85; transform: translate(-2px, -1px); }
+  94%       { opacity: .85; transform: translate(2px, 1px); }
+  95%       { opacity: .85; transform: translate(-1px, 0); }
+  96%, 100% { opacity: 0; transform: none; }
+}
+
+@keyframes glitch-b {
+  0%, 92%   { opacity: 0; transform: none; }
+  93%       { opacity: .7; transform: translate(2px, 1px); }
+  94%       { opacity: .7; transform: translate(-2px, -1px); }
+  95%       { opacity: .7; transform: translate(1px, 0); }
+  96%, 100% { opacity: 0; transform: none; }
+}
+
+/* ============================================================================
+   8. Scroll-driven animation layer
+   ----------------------------------------------------------------------------
+   Everything below is timed by the scroll position itself, using native CSS
+   scroll-driven animations. No scroll event listener exists anywhere in this
+   project: listeners fire per frame on the main thread and are the usual
+   reason a page feels heavy on a phone.
+
+   Where the browser lacks animation-timeline, each block degrades to a sane
+   static state rather than to a JavaScript fallback.
+   ========================================================================= */
+
+/* ---------- 8.1 Reading position ---------------------------------------
+   The bar reports how far down the document you are. Motivated: on a long
+   case-study page it is the only cue about length. */
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    animation-name: progress-scale;
+    animation-duration: auto;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes progress-scale {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ---------- 8.2 Pinned project stack (home page) ------------------------
+   Each featured project holds the viewport while you read it, then recedes as
+   the next one arrives. Motivated: three projects competing in a grid get
+   skimmed; one at a time gets read.
+   The transform lives on the sticky wrapper, never on the card, because the
+   card's transform belongs to the tilt interaction. */
+.stack { display: grid; gap: var(--sp-5); }
+
+/* Pinning only makes sense once a card is shorter than the viewport. Below
+   900px the cards stack vertically and are taller than the screen, so they
+   flow normally instead. */
+@media (min-width: 900px) {
+  .stack { gap: 0; }
+
+  .stack__item {
+    position: sticky;
+    top: calc(56px + 2.5dvh);
+    padding-block: 2.5dvh;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+    .stack__item {
+      animation-name: stack-recede;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: exit-crossing 0% exit-crossing 100%;
+      transform-origin: 50% 0;
+    }
+  }
+}
+
+@keyframes stack-recede {
+  to {
+    transform: scale(.93) translateY(-10px);
+    opacity: .28;
+  }
+}
+
+/* The last card has nothing arriving after it, so it must not fade out. */
+.stack__item:last-child { animation: none; }
+
+/* ---------- 8.3 Timeline (about page) ------------------------------------
+   The rail draws itself as the section passes, and each marker lights as it
+   reaches the reading line. Motivated: it turns a list of jobs into a
+   direction of travel. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .timeline::after {
+      transform: scaleY(0);
+      animation-name: rail-draw;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 85% exit 15%;
+    }
+
+    .tl-item::before {
+      animation-name: marker-ring;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 65% entry 100%;
+    }
+
+    .tl-item::after {
+      animation-name: marker-dot;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 65% entry 100%;
+    }
+  }
+}
+
+@keyframes rail-draw   { to { transform: scaleY(1); } }
+@keyframes marker-ring { to { border-color: var(--amber); } }
+@keyframes marker-dot  { to { background: var(--amber); box-shadow: 0 0 12px var(--amber); } }
+
+/* ---------- 8.4 Section entrances ---------------------------------------
+   Where scroll-driven animation exists, reveals are timed by the element's own
+   position rather than by an observer callback. The IntersectionObserver in
+   main.js stays as the fallback for browsers without animation-timeline. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .js [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      animation-name: reveal-rise;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 65%;
+    }
+  }
+}
+
+@keyframes reveal-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
