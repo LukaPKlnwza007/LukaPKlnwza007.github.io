@@ -216,6 +216,10 @@
 
       try { sessionStorage.setItem('boot-seen', '1'); } catch (_) {}
 
+      // anime-fx.js holds the hero entrance until the screen starts lifting,
+      // so the name is not already sitting there when it does.
+      document.dispatchEvent(new CustomEvent('boot:done'));
+
       boot.classList.add('is-done');
       boot.addEventListener('transitionend', () => boot.remove(), { once: true });
       // In case transitionend never fires, e.g. the tab was hidden throughout.

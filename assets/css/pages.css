@@ -81,6 +81,15 @@
   -webkit-text-stroke: 1px var(--amber);
 }
 
+/* anime-fx.js splits the surname into one span per letter so they can arrive
+   one at a time. inline-block because a transform on an inline box does
+   nothing. The readable copy of the word is kept in a .visually-hidden span. */
+.hero__title .char {
+  display: inline-block;
+  white-space: pre;
+  will-change: transform, opacity;
+}
+
 .hero__role {
   font-family: var(--font-mono);
   font-size: clamp(.8rem, .75rem + .3vw, .95rem);
@@ -441,6 +450,62 @@
   font-size: .82rem;
   line-height: 1.6;
   color: var(--text-mute);
+}
+
+/* Clicking a photo opens it. anime-fx.js builds the dialog and animates it out
+   of wherever the thumbnail was sitting. */
+.photo[role="button"] { cursor: pointer; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, .5rem + 3vw, 3rem);
+  background: rgba(6, 9, 15, .93);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lightbox__figure {
+  margin: 0;
+  max-width: min(100%, 1100px);
+  will-change: transform;
+}
+
+.lightbox__figure img {
+  width: 100%;
+  height: auto;
+  max-height: 78dvh;
+  object-fit: contain;
+  border: 1px solid var(--line);
+}
+
+.lightbox__figure figcaption {
+  margin-top: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  line-height: 1.7;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: clamp(.75rem, 2vw, 1.5rem);
+  right: clamp(.75rem, 2vw, 1.5rem);
+  width: 44px; height: 44px;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text-soft);
+  border: 1px solid var(--line);
+  background: rgba(16, 23, 40, .8);
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.lightbox__close:hover {
+  color: var(--amber);
+  border-color: var(--line-amber);
 }
 
 /* Numbered process steps */

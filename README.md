@@ -6,8 +6,9 @@ A five-page portfolio site with a dark control-room theme. Hand-written HTML,
 CSS and JavaScript, one Three.js scene, and a Java/Spring Boot service behind
 the contact form.
 
-No framework, no build step, no dependencies in the browser except Three.js,
-which is pulled from a CDN at runtime and degrades gracefully if it fails.
+No framework and no build step. Two libraries are fetched from a CDN at runtime,
+Three.js for the hero scene and anime.js for sequenced motion, and the page is
+fully usable if either fetch fails.
 
 Palette: deep navy `#0a0e17`, amber `#ffb454`, mint `#5eead4`.
 
@@ -115,6 +116,7 @@ others read its custom properties.
 | `page-transitions.js` | the veil between pages | every page |
 | `card-tilt.js` | 3D tilt and pointer spotlight | index, work |
 | `interactions.js` | magnetic primary action, title scramble | every page |
+| `anime-fx.js` | hero entrance, staggered reveals, the cursor, the photo lightbox | every page |
 | `hero-3d.js` | the Three.js scene, and its 2D fallback | index |
 | `home.js` | featured projects, the work index, ticker | index |
 | `about-page.js` | scroll-driven timeline, skills list | about |
@@ -161,6 +163,11 @@ sensible static state rather than to a JavaScript fallback.
 | Title scramble on hover | The one place the instrument theme gets to be literal | `interactions.js`, pointer and focus |
 | Card tilt and spotlight | Depth cue, and a reason for the card to react | `card-tilt.js`, measured once per hover |
 | Duotone photography | Unrelated photos read as one system, then relax to colour on hover | CSS filter plus a blend layer |
+| Hero assembling itself | The page arrives in an order instead of all at once | `anime-fx.js` timeline, held until the boot screen lifts |
+| Staggered entrances | A list arriving one row at a time reads as a list | anime.js `stagger()`, triggered by IntersectionObserver |
+| Command labels typing in | The mono `$ ls ./work` labels are the theme being literal | anime.js animating `clip-path` with a `steps()` ease |
+| Cursor | Says what is clickable before you click it | `anime-fx.js`, spring easing, mouse only |
+| Photo lightbox | Event photos are worth more than a thumbnail | `anime-fx.js`, grows out of the thumbnail's position |
 
 Everything above is pointer-only where it should be, and every piece stands
 down under `prefers-reduced-motion`.
