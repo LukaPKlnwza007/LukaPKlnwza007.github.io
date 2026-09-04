@@ -340,8 +340,11 @@ body.is-leaving .page-veil {
 
 @keyframes stack-recede {
   to {
-    transform: scale(.93) translateY(-10px);
-    opacity: .28;
+    /* Tips away from you as the next one arrives, rather than just shrinking.
+       The blur is depth of field: the card behind is not the one being read. */
+    transform: perspective(1600px) rotateX(9deg) translateZ(-150px) translateY(-18px) scale(.94);
+    opacity: .2;
+    filter: blur(2.5px);
   }
 }
 

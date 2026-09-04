@@ -6,9 +6,10 @@ A five-page portfolio site with a dark control-room theme. Hand-written HTML,
 CSS and JavaScript, one Three.js scene, and a Java/Spring Boot service behind
 the contact form.
 
-No framework and no build step. Two libraries are fetched from a CDN at runtime,
-Three.js for the hero scene and anime.js for sequenced motion, and the page is
-fully usable if either fetch fails.
+No framework and no build step. Two libraries: anime.js for sequenced and 3D
+motion, installed with npm and committed into `assets/vendor/`, and Three.js
+for the hero scene, still pulled from a CDN. The page is fully usable if
+either one fails to load.
 
 Palette: deep navy `#0a0e17`, amber `#ffb454`, mint `#5eead4`.
 
@@ -18,19 +19,41 @@ Palette: deep navy `#0a0e17`, amber `#ffb454`, mint `#5eead4`.
 
 ### The site
 
+```bash
+npm install
+```
+
+```bash
+npm start
+```
+
+That serves the site at `http://localhost:5173`, with caching off so a reload
+always shows the file you just saved.
+
 It has to be served over HTTP. **Opening the files directly with `file://` will
-not work properly** - Three.js is loaded via dynamic import, which that protocol
-blocks. The page still renders; the hero just falls back to a 2D radar scene.
+not work properly** - anime.js and Three.js are both loaded as modules, which
+that protocol blocks. The page still renders: the hero falls back to a 2D radar
+scene and the anime.js motion simply does not run.
 
-```bash
-npx serve .
-```
+### Dependencies
 
-```bash
-python -m http.server 8000
-```
+There is still no build step. The pages are the files that get served, exactly
+as they are written. npm is here for two jobs only:
 
-Or use the VS Code **Live Server** extension and open `index.html`.
+| | |
+|---|---|
+| `npm install` | fetches anime.js, then runs `npm run vendor` for you |
+| `npm run vendor` | copies `node_modules/animejs/dist/bundles/anime.esm.min.js` into `assets/vendor/anime.esm.js` |
+| `npm start` | the local server, `scripts/serve.mjs` |
+
+`node_modules/` is gitignored; `assets/vendor/anime.esm.js` is committed,
+because that is the file the browser actually loads and GitHub Pages has no
+build step to produce it. To change the version, edit `package.json`, then
+`npm install`.
+
+Three.js is still pulled from a CDN at runtime rather than vendored - it is an
+order of magnitude larger than anime.js, and the hero already has a fallback
+for when it does not arrive.
 
 ### The API
 
@@ -90,7 +113,10 @@ portfolio/
 ├── assets/
 │   ├── css/
 │   ├── js/
-│   └── img/                portrait and project photography
+│   ├── img/                portrait and project photography
+│   └── vendor/             anime.js, copied out of node_modules
+├── scripts/                the local server, and the vendor copy step
+├── package.json
 └── backend/                Spring Boot API
 ```
 
@@ -163,11 +189,13 @@ sensible static state rather than to a JavaScript fallback.
 | Title scramble on hover | The one place the instrument theme gets to be literal | `interactions.js`, pointer and focus |
 | Card tilt and spotlight | Depth cue, and a reason for the card to react | `card-tilt.js`, measured once per hover |
 | Duotone photography | Unrelated photos read as one system, then relax to colour on hover | CSS filter plus a blend layer |
-| Hero assembling itself | The page arrives in an order instead of all at once | `anime-fx.js` timeline, held until the boot screen lifts |
+| Hero assembling itself | The page arrives in an order instead of all at once | `anime-fx.js` timeline, held until the boot screen lifts. Every letter starts face-down and 320px back |
+| Cards dealt in | Project cards arrive on an angle rather than fading up | anime.js `stagger()` over rotateY/rotateX/translateZ, `perspective` on the grid |
 | Staggered entrances | A list arriving one row at a time reads as a list | anime.js `stagger()`, triggered by IntersectionObserver |
 | Command labels typing in | The mono `$ ls ./work` labels are the theme being literal | anime.js animating `clip-path` with a `steps()` ease |
 | Cursor | Says what is clickable before you click it | `anime-fx.js`, spring easing, mouse only |
-| Photo lightbox | Event photos are worth more than a thumbnail | `anime-fx.js`, grows out of the thumbnail's position |
+| Photos leaning to the pointer | Depth cue on the gallery | `createAnimatable()`, one live animation per axis instead of one per mousemove |
+| Photo lightbox | Event photos are worth more than a thumbnail | `anime-fx.js`, swings up out of the thumbnail's position |
 
 Everything above is pointer-only where it should be, and every piece stands
 down under `prefers-reduced-motion`.

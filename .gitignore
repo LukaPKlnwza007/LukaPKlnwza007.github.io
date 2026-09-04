@@ -1,3 +1,7 @@
+# npm owns anime.js, but the browser loads the copy in assets/vendor/, which is
+# committed. node_modules is only needed to produce that copy.
+node_modules/
+
 # Build output and local data from the Spring Boot service
 backend/target/
 backend/data/

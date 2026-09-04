@@ -673,7 +673,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr));
   gap: var(--sp-5);
+  /* anime-fx.js deals the cards in on an angle; the depth has to come from
+     somewhere, and perspective only applies to direct children. */
+  perspective: 1400px;
 }
+
+.card-grid .filter-item { transform-style: preserve-3d; }
 
 /* ---------- 10. Timeline (about.html) ----------------------------------- */
 .timeline {

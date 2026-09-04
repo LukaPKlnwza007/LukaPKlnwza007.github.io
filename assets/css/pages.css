@@ -81,12 +81,21 @@
   -webkit-text-stroke: 1px var(--amber);
 }
 
-/* anime-fx.js splits the surname into one span per letter so they can arrive
-   one at a time. inline-block because a transform on an inline box does
-   nothing. The readable copy of the word is kept in a .visually-hidden span. */
+/* anime-fx.js splits both lines of the name into one span per letter so they
+   can swing up out of the screen one at a time. inline-block because a
+   transform on an inline box does nothing, and the perspective sits on the
+   shell because perspective only applies to an element's direct children.
+   The readable copy of each word is kept in a .visually-hidden span. */
+.hero__title .char-shell {
+  display: inline-block;
+  perspective: 620px;
+  transform-style: preserve-3d;
+}
+
 .hero__title .char {
   display: inline-block;
   white-space: pre;
+  transform-origin: 50% 100%;
   will-change: transform, opacity;
 }
 
@@ -110,6 +119,8 @@
   position: relative;
   display: grid;
   gap: var(--sp-4);
+  /* The panels arrive on an angle, so they need somewhere to arrive from. */
+  perspective: 1100px;
 }
 .hero__hud .panel { padding: var(--sp-4); }
 
@@ -188,6 +199,7 @@
    ------------------------------------------------------------------------ */
 .work-index {
   border-top: 1px solid var(--line);
+  perspective: 1000px;   /* rows flip face-up as they scroll in */
 }
 
 .work-index__item { border-bottom: 1px solid var(--line); }
@@ -429,12 +441,15 @@
 .photo-grid {
   display: grid;
   gap: var(--sp-4);
+  perspective: 900px;    /* photos lean toward the pointer */
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
 }
 
 .photo { margin: 0; }
 
 .photo img {
+  transform-style: preserve-3d;
+  will-change: transform;
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 10;
@@ -460,6 +475,7 @@
   position: fixed;
   inset: 0;
   z-index: 300;
+  perspective: 1400px;
   display: grid;
   place-items: center;
   padding: clamp(1rem, .5rem + 3vw, 3rem);
@@ -469,6 +485,7 @@
 }
 
 .lightbox__figure {
+  transform-style: preserve-3d;
   margin: 0;
   max-width: min(100%, 1100px);
   will-change: transform;
