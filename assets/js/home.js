@@ -7,6 +7,7 @@
 
   const D  = window.PORTFOLIO;
   const UI = window.UI;
+  const T  = (k, v) => (window.I18N ? window.I18N.t(k, v) : k);
   if (!D || !UI) return;
 
   /* ---------- Featured work, as a pinned stack ---------------------------
@@ -23,7 +24,7 @@
       const card = UI.projectCard(project, i, {
         eager: i === 0,
         displayName: project.homeName || project.name,
-        ctaLabel: alias ? 'Open ' + project.name : 'Read it'
+        ctaLabel: alias ? T('card.open', { name: project.name }) : T('card.readIt')
       });
       card.classList.add('card--wide');
       stack.appendChild(UI.el('div', { class: 'stack__item' }, [card]));

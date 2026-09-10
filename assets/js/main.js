@@ -177,7 +177,12 @@
       const value = el.dataset.bind
         .split('.')
         .reduce((obj, key) => (obj == null ? obj : obj[key]), D);
-      if (value != null) el.textContent = value;
+      if (value == null) return;
+      el.textContent = value;
+      // The glitch effect draws its two coloured copies from data-text. If the
+      // element's words just changed - a different language, say - the copies
+      // have to change with them or they spell the old one.
+      if (el.hasAttribute('data-text')) el.setAttribute('data-text', value);
     });
 
     document.querySelectorAll('[data-mailto]').forEach(a => {

@@ -99,6 +99,43 @@ it is still there for search engines and for anyone with JavaScript disabled.
 
 ---
 
+## Two languages
+
+Thai and English, switched from the pair of buttons in the nav.
+
+The wording lives in two places, split by who owns it:
+
+| | |
+|---|---|
+| `assets/js/i18n.js` | wording that belongs to the pages: headings, labels, prose, form messages. Flat keys, both languages written side by side, so a missing translation is visible when reading |
+| `assets/js/data.js` | wording that is yours: the name, the timeline, every project. Written as `{ en: '…', th: '…' }` |
+
+`i18n.js` loads first and settles the language before anything renders. data.js
+then resolves its own `{ en, th }` pairs once, so nothing downstream knows there
+are two languages - by the time `home.js` reads a project title it is a string.
+
+In the HTML, `data-i18n="key"` replaces an element's text and
+`data-i18n-attr="placeholder:key"` replaces an attribute. **The English stays in
+the HTML as the element's own text**, so with JavaScript off the site is a
+working English page rather than a set of empty boxes.
+
+Which language you get: `?lang=th` if present, then whatever you last chose
+(`localStorage`), then the browser's own preference.
+
+**Switching reloads the page.** The alternative is teaching six render scripts to
+tear themselves down and rebuild, and a reload is both simpler and impossible to
+get subtly wrong.
+
+Two things Thai needs that Latin does not, both in `base.css` under
+`[data-lang="th"]`: the headings move off Space Grotesk, which has no Thai
+glyphs at all, and the leading opens up, because vowels and tone marks stack
+above and below the line. `anime-fx.js` splits the hero name with
+`Intl.Segmenter` for the same reason the boot screen already did - `for..of`
+over โลไธสงค์ hands back tone marks as separate characters, and each one would
+end up in its own span, floating on its own.
+
+---
+
 ## Structure
 
 ```
@@ -136,7 +173,8 @@ others read its custom properties.
 
 | File | Job | Loaded on |
 |---|---|---|
-| `data.js` | **all content.** Must load first. | every page |
+| `i18n.js` | picks the language, holds the page wording, drives the switch. **Must load first.** | every page |
+| `data.js` | **all content**, resolved to one language by i18n.js | every page |
 | `cards.js` | DOM helper plus the project card template | every page |
 | `main.js` | nav, mobile menu, scroll-reveal fallback, boot screen, `data-bind` | every page |
 | `page-transitions.js` | the veil between pages | every page |

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 875" width="1400" height="875" role="img" aria-label="A two-wheeled robot on a curving black line, with sensor beams pointing down">
+  <defs>
+    <pattern id="rb-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#5eead4" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="rb-glow" cx="52%" cy="44%" r="52%">
+      <stop offset="0%" stop-color="#5eead4" stop-opacity=".14"/>
+      <stop offset="100%" stop-color="#5eead4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1400" height="875" fill="#0a0e17"/>
+  <rect width="1400" height="875" fill="url(#rb-grid)"/>
+  <ellipse cx="720" cy="390" rx="560" ry="360" fill="url(#rb-glow)"/>
+
+  <!-- The line it is following, and the corner that was the whole problem -->
+  <path d="M60 690 C 300 690, 340 470, 560 470 S 860 690, 1080 560 S 1300 300, 1400 300"
+        fill="none" stroke="#080c14" stroke-width="54" stroke-linecap="round"/>
+  <path d="M60 690 C 300 690, 340 470, 560 470 S 860 690, 1080 560 S 1300 300, 1400 300"
+        fill="none" stroke="#ffb454" stroke-opacity=".28" stroke-width="54"
+        stroke-linecap="round" stroke-dasharray="4 26"/>
+
+  <!-- Robot, sitting on the line at the bend -->
+  <g transform="translate(560 470) rotate(-14)">
+    <!-- chassis -->
+    <rect x="-130" y="-92" width="260" height="184" rx="18"
+          fill="#101728" stroke="#5eead4" stroke-opacity=".5" stroke-width="3"/>
+
+    <!-- wheels -->
+    <rect x="-160" y="-70" width="42" height="140" rx="12" fill="#0d1220" stroke="#9fb0c9" stroke-opacity=".5" stroke-width="3"/>
+    <rect x="118" y="-70" width="42" height="140" rx="12" fill="#0d1220" stroke="#9fb0c9" stroke-opacity=".5" stroke-width="3"/>
+
+    <!-- board on top -->
+    <rect x="-84" y="-52" width="168" height="104" rx="8" fill="#0a0e17" stroke="#5eead4" stroke-opacity=".32" stroke-width="2"/>
+    <g fill="#5eead4" fill-opacity=".35">
+      <rect x="-64" y="-32" width="60" height="10" rx="5"/>
+      <rect x="-64" y="-12" width="96" height="10" rx="5"/>
+      <rect x="-64" y="8"  width="44" height="10" rx="5"/>
+    </g>
+    <circle cx="58" cy="24" r="11" fill="#ffb454"/>
+
+    <!-- the two sensors, hanging off the front, looking down -->
+    <rect x="-64" y="92" width="46" height="26" rx="6" fill="#0d1220" stroke="#ffb454" stroke-opacity=".6" stroke-width="2"/>
+    <rect x="18"  y="92" width="46" height="26" rx="6" fill="#0d1220" stroke="#ffb454" stroke-opacity=".6" stroke-width="2"/>
+  </g>
+
+  <!-- Sensor beams, one on the tape and one off it -->
+  <g stroke-linecap="round">
+    <path d="M516 566 L 500 636" stroke="#5eead4" stroke-opacity=".75" stroke-width="6"/>
+    <path d="M596 546 L 614 618" stroke="#ff6b6b" stroke-opacity=".6" stroke-width="6"/>
+    <circle cx="500" cy="646" r="13" fill="#5eead4" fill-opacity=".75"/>
+    <circle cx="614" cy="628" r="13" fill="none" stroke="#ff6b6b" stroke-opacity=".6" stroke-width="4"/>
+  </g>
+
+  <text x="72" y="132" fill="#5eead4" fill-opacity=".8"
+        font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="30" letter-spacing="6">
+    left: BLACK &#160; right: WHITE
+  </text>
+  <text x="72" y="182" fill="#ffb454" fill-opacity=".8"
+        font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="30" letter-spacing="6">
+    &#8594; slow the left wheel
+  </text>
+</svg>

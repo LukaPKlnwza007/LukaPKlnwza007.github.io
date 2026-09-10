@@ -373,6 +373,45 @@
   .nav__cta { margin: var(--sp-4) 0 0; justify-content: center; }
 }
 
+/* ---------- 6.5 Language switch ----------------------------------------
+   Two real buttons rather than one that toggles, so the language you are not
+   in is visible and nameable instead of hidden behind a guess. Each is
+   labelled in its own language, and marked with aria-pressed rather than only
+   coloured. */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  margin-inline: var(--sp-2);
+  border: 1px solid var(--line);
+  clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+}
+
+.lang-switch__btn {
+  padding: .38rem .6rem;
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+
+.lang-switch__btn[lang="th"] {
+  /* Thai has no uppercase, and IBM Plex Mono has no Thai glyphs. */
+  font-family: var(--font-thai);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: .78rem;
+}
+
+.lang-switch__btn:hover { color: var(--mint); }
+
+.lang-switch__btn.is-on {
+  color: #0a0e17;
+  background: var(--mint);
+  font-weight: 600;
+}
+
 /* ---------- 7. Scroll progress + custom cursor -------------------------- */
 .scroll-progress {
   position: fixed;

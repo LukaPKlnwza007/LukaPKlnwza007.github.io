@@ -14,6 +14,7 @@
 
   const D  = window.PORTFOLIO;
   const UI = window.UI;
+  const T  = (k, v) => (window.I18N ? window.I18N.t(k, v) : k);
   if (!D || !UI) return;
 
   const grid    = document.querySelector('[data-project-grid]');
@@ -109,7 +110,7 @@
     });
 
     if (countEl) {
-      countEl.textContent = 'showing ' + shown + ' of ' + items.length;
+      countEl.textContent = T('work.showing', { n: shown, total: items.length });
     }
     if (emptyEl) emptyEl.classList.toggle('is-shown', shown === 0);
 

@@ -16,6 +16,8 @@
   const form = document.querySelector('[data-contact-form]');
   if (!form || !D) return;
 
+  const T = (k, v) => (window.I18N ? window.I18N.t(k, v) : k);
+
   const statusEl    = form.querySelector('[data-form-status]');
   const submit      = form.querySelector('[data-submit]');
   const submitLabel = submit ? submit.querySelector('[data-submit-label]') : null;
@@ -27,16 +29,16 @@
   const RULES = {
     name: {
       test: v => v.length >= 2 && v.length <= 80,
-      message: 'Between 2 and 80 characters, please'
+      message: T('form.nameLen')
     },
     email: {
       // Loose on purpose. The only real test of an address is sending to it.
       test: v => v.length <= 160 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v),
-      message: 'That does not look like an email address'
+      message: T('form.badEmail')
     },
     message: {
       test: v => v.length >= 10 && v.length <= MAX_MESSAGE,
-      message: 'At least 10 characters, up to 2,000'
+      message: T('form.msgLen')
     }
   };
 
@@ -102,7 +104,7 @@
   function setLoading(loading) {
     if (!submit) return;
     submit.disabled = loading;
-    if (submitLabel) submitLabel.textContent = loading ? 'Sending…' : 'Send message';
+    if (submitLabel) submitLabel.textContent = loading ? T('form.sending') : T('contact.send');
 
     const spinner = submit.querySelector('.spinner');
     if (loading && !spinner) {
@@ -121,7 +123,7 @@
     // user lands where the work is.
     const invalid = Object.keys(RULES).filter(name => !validateField(name));
     if (invalid.length) {
-      showStatus('error', 'Some fields need another look');
+      showStatus('error', T('form.checkFields'));
       const first = form.elements[invalid[0]];
       if (first) first.focus();
       return;
@@ -130,7 +132,7 @@
     // Honeypot: bots fill in every field they find. Report success so they do
     // not learn anything, and send nothing.
     if (form.elements.website && form.elements.website.value) {
-      showStatus('ok', 'Message sent');
+      showStatus('ok', T('form.sent'));
       form.reset();
       return;
     }
@@ -143,7 +145,7 @@
     };
 
     setLoading(true);
-    showStatus('busy', 'Sending…');
+    showStatus('busy', T('form.sending'));
 
     // Stop waiting if the server goes quiet.
     const controller = new AbortController();
@@ -161,7 +163,7 @@
       const data = await res.json().catch(() => ({}));
 
       if (res.ok) {
-        showStatus('ok', data.message || 'Message sent. I will reply within a day or two.');
+        showStatus('ok', data.message || T('form.sent'));
         form.reset();
         paintCount();
         Object.keys(RULES).forEach(name => setFieldError(name, ''));
@@ -169,14 +171,14 @@
       }
 
       if (res.status === 429) {
-        showStatus('error', data.message || 'That is a lot of messages. Try again shortly.');
+        showStatus('error', data.message || T('form.rateLimit'));
         return;
       }
 
       // 400 with per-field errors from Bean Validation on the Java side.
       if (data.errors && typeof data.errors === 'object') {
         Object.keys(data.errors).forEach(field => setFieldError(field, data.errors[field]));
-        showStatus('error', 'The server rejected some of that');
+        showStatus('error', T('form.rejected'));
         const firstServerField = form.elements[Object.keys(data.errors)[0]];
         if (firstServerField) firstServerField.focus();
         return;
@@ -194,8 +196,8 @@
       showStatus(
         'error',
         err.name === 'AbortError'
-          ? 'The server is not answering. Reach me directly at'
-          : 'Could not reach the server. Reach me directly at',
+          ? T('form.timedOut')
+          : T('form.unreachable'),
         mail
       );
     } finally {

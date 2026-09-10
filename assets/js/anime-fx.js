@@ -187,7 +187,27 @@
       }
     }
 
-    /** One span per character, with the word left whole for a screen reader. */
+    /**
+     * Split into what a reader would call letters, not into code points.
+     *
+     * Thai is the case that matters here: โลไธสงค์ has vowels and a tone mark
+     * that live on top of the consonant before them. Iterating the string
+     * with for..of hands those back as separate characters, and each one ends
+     * up in its own span, floating on its own, spelling nothing. The boot
+     * screen in main.js already had to solve this; same fix.
+     */
+    function graphemes(word) {
+      if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+        const locale = document.documentElement.lang || 'en';
+        return Array.from(
+          new Intl.Segmenter(locale, { granularity: 'grapheme' }).segment(word),
+          seg => seg.segment
+        );
+      }
+      return Array.from(word);
+    }
+
+    /** One span per letter, with the word left whole for a screen reader. */
     function splitChars(el) {
       const value = el.textContent;
       el.textContent = '';
@@ -204,7 +224,7 @@
       shell.setAttribute('aria-hidden', 'true');
 
       const out = [];
-      for (const ch of value) {
+      for (const ch of graphemes(value)) {
         const span = document.createElement('span');
         span.className = 'char';
         span.textContent = ch === ' ' ? ' ' : ch;

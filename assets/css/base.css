@@ -158,6 +158,43 @@ h2 { font-size: clamp(1.7rem, 1.2rem + 2.2vw, 2.7rem); }
 h3 { font-size: clamp(1.15rem, 1rem + .8vw, 1.45rem); letter-spacing: -.01em; }
 h4 { font-size: 1.02rem; letter-spacing: 0; }
 
+/* ---------- 4.1 Thai ----------------------------------------------------
+   Space Grotesk has no Thai glyphs, so a Thai heading set in it falls back
+   glyph by glyph and comes out a different size and weight from the line
+   above it. Hand the headings to the Thai family instead.
+
+   The rest is what Thai needs and Latin does not: no negative tracking, and
+   more room between lines, because vowels and tone marks stack above and
+   below the characters and 1.08 puts them into each other.
+   ----------------------------------------------------------------------- */
+[data-lang="th"] h1,
+[data-lang="th"] h2,
+[data-lang="th"] h3,
+[data-lang="th"] h4 {
+  font-family: var(--font-thai);
+  letter-spacing: 0;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+[data-lang="th"] .lede,
+[data-lang="th"] .prose p,
+[data-lang="th"] p {
+  line-height: 1.9;
+}
+
+/* Mono is for terminal labels, and IBM Plex Mono has no Thai either. Where a
+   Thai string lands in one, keep the size but let a Thai face draw it. */
+[data-lang="th"] .eyebrow:not(.eyebrow--cmd),
+[data-lang="th"] .panel-head,
+[data-lang="th"] .data-row dt,
+[data-lang="th"] .hud-row,
+[data-lang="th"] .chip,
+[data-lang="th"] .skill {
+  font-family: var(--font-thai);
+  letter-spacing: .02em;
+}
+
 p { text-wrap: pretty; }
 
 strong { color: #fff; font-weight: 600; }

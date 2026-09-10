@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 875" width="1400" height="875" role="img" aria-label="A small display showing temperature and humidity, wired to a sensor">
+  <defs>
+    <pattern id="mn-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#5eead4" stroke-opacity=".07" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="mn-glow" cx="38%" cy="46%" r="52%">
+      <stop offset="0%" stop-color="#ffb454" stop-opacity=".13"/>
+      <stop offset="100%" stop-color="#ffb454" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1400" height="875" fill="#0a0e17"/>
+  <rect width="1400" height="875" fill="url(#mn-grid)"/>
+  <ellipse cx="530" cy="400" rx="520" ry="380" fill="url(#mn-glow)"/>
+
+  <!-- The LCD -->
+  <g>
+    <rect x="150" y="210" width="620" height="330" rx="14"
+          fill="#0d1220" stroke="#5eead4" stroke-opacity=".38" stroke-width="3"/>
+    <rect x="182" y="242" width="556" height="266" rx="6"
+          fill="#081018" stroke="#5eead4" stroke-opacity=".22" stroke-width="2"/>
+
+    <text x="216" y="352" fill="#5eead4"
+          font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="72" letter-spacing="2">
+      31.4 &#176;C
+    </text>
+    <text x="216" y="452" fill="#ffb454"
+          font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="72" letter-spacing="2">
+      62 %RH
+    </text>
+
+    <!-- character cells, the way a 16x2 module actually looks up close -->
+    <g stroke="#5eead4" stroke-opacity=".07" stroke-width="1">
+      <line x1="182" y1="375" x2="738" y2="375"/>
+      <line x1="356" y1="242" x2="356" y2="508"/>
+      <line x1="530" y1="242" x2="530" y2="508"/>
+    </g>
+  </g>
+
+  <!-- Ribbon from the board to the sensor -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M770 380 C 880 380, 900 300, 1010 300" stroke="#ffb454" stroke-opacity=".55" stroke-width="5"/>
+    <path d="M770 404 C 890 404, 910 336, 1010 336" stroke="#5eead4" stroke-opacity=".45" stroke-width="5"/>
+    <path d="M770 428 C 900 428, 920 372, 1010 372" stroke="#9fb0c9" stroke-opacity=".35" stroke-width="5"/>
+  </g>
+
+  <!-- The sensor itself: a DHT-style block with a vented face -->
+  <g>
+    <rect x="1010" y="252" width="180" height="240" rx="10"
+          fill="#101728" stroke="#5eead4" stroke-opacity=".45" stroke-width="3"/>
+    <g fill="#5eead4" fill-opacity=".28">
+      <rect x="1040" y="288" width="120" height="14" rx="7"/>
+      <rect x="1040" y="322" width="120" height="14" rx="7"/>
+      <rect x="1040" y="356" width="120" height="14" rx="7"/>
+      <rect x="1040" y="390" width="120" height="14" rx="7"/>
+      <rect x="1040" y="424" width="120" height="14" rx="7"/>
+    </g>
+    <g stroke="#9fb0c9" stroke-opacity=".5" stroke-width="5">
+      <line x1="1044" y1="492" x2="1044" y2="556"/>
+      <line x1="1088" y1="492" x2="1088" y2="556"/>
+      <line x1="1132" y1="492" x2="1132" y2="556"/>
+    </g>
+  </g>
+
+  <!-- Heat rising off the sensor, because that is what it is measuring -->
+  <g fill="none" stroke="#ffb454" stroke-opacity=".4" stroke-width="4" stroke-linecap="round">
+    <path d="M1046 220 c 0 -22, 22 -22, 22 -44 s -22 -22, -22 -44"/>
+    <path d="M1100 208 c 0 -22, 22 -22, 22 -44 s -22 -22, -22 -44"/>
+    <path d="M1154 220 c 0 -22, 22 -22, 22 -44 s -22 -22, -22 -44"/>
+  </g>
+
+  <text x="150" y="640" fill="#5eead4" fill-opacity=".7"
+        font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="27" letter-spacing="6">
+    read &#183; average &#183; show &#183; wait 2s
+  </text>
+</svg>

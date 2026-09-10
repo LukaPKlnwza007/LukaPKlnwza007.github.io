@@ -13,6 +13,8 @@
   const UI = window.UI;
   if (!D || !UI) return;
 
+  const T = (k, v) => (window.I18N ? window.I18N.t(k, v) : k);
+
   const root    = document.querySelector('[data-detail]');
   const missing = document.querySelector('[data-detail-missing]');
   if (!root) return;
@@ -23,7 +25,7 @@
   if (!project) {
     root.hidden = true;
     if (missing) missing.hidden = false;
-    document.title = 'Not found · ' + D.identity.name;
+    document.title = T('detail.notFound') + ' · ' + D.identity.name;
     return;
   }
 
@@ -122,7 +124,7 @@
       UI.el('span', { class: 'pager__name', text: target.name })
     ]);
 
-    if (prev) pager.appendChild(makeLink(prev, 'prev', '← previous'));
-    if (next) pager.appendChild(makeLink(next, 'next', 'next →'));
+    if (prev) pager.appendChild(makeLink(prev, 'prev', T('detail.prev')));
+    if (next) pager.appendChild(makeLink(next, 'next', T('detail.next')));
   }
 })();

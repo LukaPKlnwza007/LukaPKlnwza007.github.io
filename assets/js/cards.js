@@ -8,6 +8,10 @@
 window.UI = (function () {
   'use strict';
 
+  // The page wording, which is Thai or English depending on i18n.js. Falls
+  // back to the key so a missing file shows up rather than blanking a label.
+  const T = (key, vars) => (window.I18N ? window.I18N.t(key, vars) : key);
+
   /**
    * Terse element factory.
    * @param {string} tag
@@ -59,7 +63,7 @@ window.UI = (function () {
       src: project.cover,
       // Describe the photograph, not the card. "Cover photo for Project 4"
       // tells a screen reader nothing it cannot already read in the heading.
-      alt: project.coverAlt || ('Cover photo for ' + label),
+      alt: project.coverAlt || T('card.coverAlt', { name: label }),
       width: '640',
       height: '400',
       // Anything below the first screen waits its turn.
@@ -93,7 +97,7 @@ window.UI = (function () {
     );
 
     const cta = el('span', { class: 'card__cta' }, [
-      (opts && opts.ctaLabel) || 'Read it',
+      (opts && opts.ctaLabel) || T('card.readIt'),
       el('span', { text: '→', 'aria-hidden': 'true' })
     ]);
 
