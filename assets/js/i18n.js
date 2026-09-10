@@ -45,10 +45,10 @@ window.I18N = (function () {
 
     'skip':        { en: 'Skip to content', th: 'ข้ามไปที่เนื้อหา' },
     'footer.colophon': {
-      en: 'Set in Space Grotesk and IBM Plex Mono. Hand-written HTML, CSS and ' +
+      en: 'Set in Chakra Petch, Anuphan and Space Mono. Hand-written HTML, CSS and ' +
           'JavaScript, one Three.js scene, a Spring Boot endpoint behind the ' +
           'contact form. No analytics, no cookie banner, nothing to accept.',
-      th: 'ใช้ฟอนต์ Space Grotesk, IBM Plex Mono และ IBM Plex Sans Thai เขียน ' +
+      th: 'ใช้ฟอนต์ Chakra Petch, Anuphan และ Space Mono เขียน ' +
           'HTML, CSS และ JavaScript เองทั้งหมด มีฉาก Three.js หนึ่งฉาก และ ' +
           'Spring Boot อยู่หลังฟอร์มติดต่อ ไม่มีตัวเก็บสถิติ ไม่มีแบนเนอร์คุกกี้ ' +
           'ไม่มีอะไรให้ต้องกดยอมรับ'

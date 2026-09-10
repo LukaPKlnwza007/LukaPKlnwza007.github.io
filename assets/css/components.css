@@ -397,7 +397,7 @@
 }
 
 .lang-switch__btn[lang="th"] {
-  /* Thai has no uppercase, and IBM Plex Mono has no Thai glyphs. */
+  /* Thai has no uppercase, and Space Mono has no Thai glyphs. */
   font-family: var(--font-thai);
   text-transform: none;
   letter-spacing: 0;
@@ -713,11 +713,18 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 310px), 1fr));
   gap: var(--sp-5);
   /* anime-fx.js deals the cards in on an angle; the depth has to come from
-     somewhere, and perspective only applies to direct children. */
+     somewhere, and perspective only applies to direct children. That direct
+     child is .filter-item, which is the only thing this should reach.
+
+     Deliberately no transform-style: preserve-3d on .filter-item. With it, this
+     perspective carries on down into .card, which already applies its own
+     perspective() for the hover tilt. Two of them compound, the tilt gets much
+     bigger than the 6.5 degrees card-tilt.js asks for, and the card slides
+     around under the pointer - which makes a small target like the "Read it"
+     line genuinely hard to hit. Flattening at .filter-item keeps the entrance
+     3D and leaves the tilt to be exactly what it says it is. */
   perspective: 1400px;
 }
-
-.card-grid .filter-item { transform-style: preserve-3d; }
 
 /* ---------- 10. Timeline (about.html) ----------------------------------- */
 .timeline {

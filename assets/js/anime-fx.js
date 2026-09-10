@@ -354,10 +354,12 @@
       let hot = false;
 
       // Trailing, not glued to the pointer: the lag is what makes it read as
-      // an instrument rather than a second mouse arrow.
+      // an instrument rather than a second mouse arrow. Short, though. At 380ms
+      // the ring is far enough behind the real cursor that you start aiming
+      // with the ring, and then small targets feel like they are dodging you.
       const pos = createAnimatable(root, {
-        x: { duration: 380, ease: 'out(3)' },
-        y: { duration: 380, ease: 'out(3)' }
+        x: { duration: 170, ease: 'out(3)' },
+        y: { duration: 170, ease: 'out(3)' }
       });
 
       addEventListener('pointermove', (e) => {

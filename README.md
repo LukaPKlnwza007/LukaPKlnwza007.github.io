@@ -126,10 +126,15 @@ Which language you get: `?lang=th` if present, then whatever you last chose
 tear themselves down and rebuild, and a reload is both simpler and impossible to
 get subtly wrong.
 
-Two things Thai needs that Latin does not, both in `base.css` under
-`[data-lang="th"]`: the headings move off Space Grotesk, which has no Thai
-glyphs at all, and the leading opens up, because vowels and tone marks stack
-above and below the line. `anime-fx.js` splits the hero name with
+What Thai needs that Latin does not, all in `base.css` under `:lang(th)`: the
+leading opens up, because vowels and tone marks stack above and below the line,
+and the tracking goes back to normal. Nothing is substituted - Chakra Petch and
+Anuphan both cover Thai, which is most of why they were chosen.
+
+Watch that selector, though. It used to set `font-family` on a bare `:lang(th)`,
+written for a site where an individual Thai run got marked up. Once `lang="th"`
+sits on `<html>` it matches every element on the page, and it quietly pulled
+every heading off the display face. `anime-fx.js` splits the hero name with
 `Intl.Segmenter` for the same reason the boot screen already did - `for..of`
 over โลไธสงค์ hands back tone marks as separate characters, and each one would
 end up in its own span, floating on its own.
