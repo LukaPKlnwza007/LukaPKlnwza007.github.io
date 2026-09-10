@@ -1121,6 +1121,17 @@ textarea.field__input { resize: vertical; min-height: 150px; line-height: 1.65; 
 .detail-hero__media img[src$=".svg"] {
   filter: none;
 }
+
+/* Certificates are documents, and three of the projects are one. Duotoning a
+   sheet of printed paper does nothing for the page and quite a lot to how hard
+   the words are to read, so they get a much lighter touch. */
+.card__media img[src*="cert-"] {
+  filter: grayscale(.2) brightness(.94);
+}
+.card:hover .card__media img[src*="cert-"],
+.card:focus-within .card__media img[src*="cert-"] {
+  filter: none;
+}
 .card:hover .card__media::after,
 .card:focus-within .card__media::after { opacity: .3; }
 

@@ -68,7 +68,7 @@ window.PORTFOLIO = (function () {
      -------------------------------------------------------------------- */
   const timeline = [
     {
-      year: '2026',
+      year: t({ en: '2026', th: '2569' }),
       role: t({
         en: 'Went to a competition and lost to a dirt road',
         th: 'ไปแข่ง แล้วแพ้ให้ถนนลูกรัง'
@@ -90,7 +90,7 @@ window.PORTFOLIO = (function () {
       })
     },
     {
-      year: '2025',
+      year: t({ en: '2025', th: '2568' }),
       role: t({ en: 'Things that beep', th: 'ของที่ส่งเสียงบี๊บ' }),
       org:  t({ en: 'A breadboard on my desk', th: 'เบรดบอร์ดบนโต๊ะผม' }),
       desc: t({
@@ -105,7 +105,7 @@ window.PORTFOLIO = (function () {
       })
     },
     {
-      year: '2024',
+      year: t({ en: '2024', th: '2567' }),
       role: t({ en: 'First page that was mine', th: 'หน้าเว็บแรกที่เป็นของผมเอง' }),
       org:  t({
         en: 'Computer class, then at home instead of sleeping',
@@ -121,7 +121,7 @@ window.PORTFOLIO = (function () {
       })
     },
     {
-      year: '2023',
+      year: t({ en: '2023', th: '2566' }),
       role: t({ en: 'Opened a folder I should not have', th: 'เปิดโฟลเดอร์ที่ไม่ควรเปิด' }),
       org:  t({ en: 'The family computer', th: 'คอมพิวเตอร์ที่บ้าน' }),
       desc: t({
@@ -159,10 +159,12 @@ window.PORTFOLIO = (function () {
      learned   → what I got out of it. Not metrics: this is school work, and
                  "99.8% uptime" on a school project is a lie with a decimal point
 
-     « CHECK » Projects 4, 5 and 6 are ones I wrote for you from the skills you
-     listed. They are the shape of thing an M5 student who does HTML, CSS, C
-     and sensors would plausibly have built. Correct them, or tell me the real
-     ones and I will swap them in.
+     Projects 4, 5 and 6 are the three certificates: the Dobot workshop at Loei
+     Rajabhat, the Free Fire tournament, and the gold medal with the Pong Lang
+     band. The organisation, the event, the award and the date on each of them
+     are read off the certificate itself. The « what I did » and « what I
+     learned » lists under each one are written from what that kind of day
+     involves, not from a transcript - « CHECK » those and make them yours.
      -------------------------------------------------------------------- */
   const projects = [
     {
@@ -174,7 +176,7 @@ window.PORTFOLIO = (function () {
         en: 'A traffic light that only bothers changing when someone is there',
         th: 'ไฟจราจรที่จะเปลี่ยนไฟก็ต่อเมื่อมีคนยืนอยู่จริง ๆ'
       }),
-      year: '2026',
+      year: t({ en: '2026', th: '2569' }),
       role: t({ en: 'Wiring, C, and a lot of tape', th: 'ต่อสาย เขียน C และเทปอีกหลายม้วน' }),
       client: t({ en: 'School project', th: 'งานโรงเรียน' }),
       duration: t({ en: 'A few weeks of afternoons', th: 'ตอนบ่ายของสองสามสัปดาห์' }),
@@ -246,7 +248,7 @@ window.PORTFOLIO = (function () {
         en: 'A day at KKU working out where in the world a photo was taken',
         th: 'หนึ่งวันที่ ม.ขอนแก่น นั่งเดาว่าภาพนี้ถ่ายที่ไหนบนโลก'
       }),
-      year: '2026',
+      year: t({ en: '2026', th: '2569' }),
       role: t({ en: 'Competitor, school team', th: 'ผู้เข้าแข่งขัน ทีมโรงเรียน' }),
       client: t({
         en: '4th Computing Fair, College of Computing, Khon Kaen University',
@@ -379,7 +381,7 @@ window.PORTFOLIO = (function () {
         en: 'The site you are reading, written by hand',
         th: 'เว็บที่คุณกำลังอ่านอยู่ เขียนเองทั้งหมด'
       }),
-      year: '2026',
+      year: t({ en: '2026', th: '2569' }),
       role: t({ en: 'All of it', th: 'ทำเองทั้งหมด' }),
       client: t({ en: 'Me', th: 'ตัวเอง' }),
       duration: t({ en: 'Ongoing', th: 'ยังทำอยู่' }),
@@ -439,209 +441,224 @@ window.PORTFOLIO = (function () {
     },
 
     {
-      id: 'timetable',
+      id: 'dobot',
       featured: false,
       name: t({ en: 'Project 4', th: 'โปรเจกต์ 4' }),
       tagline: t({
-        en: 'A timetable page, so nobody has to ask which room again',
-        th: 'หน้าตารางเรียน จะได้ไม่มีใครต้องถามว่าคาบนี้ห้องไหนอีก'
+        en: 'A day with a robot arm that does exactly what you said',
+        th: 'หนึ่งวันกับแขนกล ที่ทำตามที่เราสั่งเป๊ะ ๆ'
       }),
-      year: '2025',
-      role: t({ en: 'HTML, CSS, and asking people what they wanted', th: 'HTML, CSS และไปถามคนอื่นว่าอยากได้อะไร' }),
-      client: t({ en: 'My class', th: 'ห้องเรียนของผม' }),
-      duration: t({ en: 'A weekend, then small fixes for a month', th: 'หนึ่งสุดสัปดาห์ แล้วตามแก้เล็ก ๆ อีกเดือน' }),
-      category: 'web',
-      tags: ['HTML', 'CSS'],
-      cover: 'assets/img/work-timetable.svg',
+      year: t({ en: '2025', th: '2568' }),
+      role: t({ en: 'Trainee', th: 'ผู้เข้าอบรม' }),
+      client: t({
+        en: 'Faculty of Industrial Technology, Loei Rajabhat University',
+        th: 'คณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏเลย'
+      }),
+      duration: t({ en: 'One day, 13 August 2025', th: 'หนึ่งวัน 13 สิงหาคม 2568' }),
+      category: 'training',
+      tags: t({
+        en: ['Dobot Magician', 'Robotics', 'Automation'],
+        th: ['Dobot Magician', 'หุ่นยนต์', 'ระบบอัตโนมัติ']
+      }),
+      cover: 'assets/img/cert-dobot.jpg',
       coverAlt: t({
-        en: 'Drawing of a weekly timetable grid with one column highlighted',
-        th: 'ภาพวาดตารางเรียนรายสัปดาห์ โดยมีหนึ่งคอลัมน์ถูกเน้นไว้'
+        en: 'Certificate from the Faculty of Industrial Technology, Loei Rajabhat University, for a Dobot Magician robotic arm and automation workshop',
+        th: 'เกียรติบัตรจากคณะเทคโนโลยีอุตสาหกรรม มหาวิทยาลัยราชภัฏเลย สำหรับการอบรมหุ่นยนต์แขนกล Dobot Magician และระบบอัตโนมัติ'
       }),
       summary: t({
-        en: 'The class timetable as one page that opens on a phone, instead of ' +
-            'a photo of a photo of a printout.',
-        th: 'ตารางเรียนของห้อง ทำเป็นหน้าเว็บหน้าเดียวที่เปิดบนมือถือได้ ' +
-            'แทนที่จะเป็นรูปถ่ายของรูปถ่ายของกระดาษที่ปรินต์มา'
+        en: 'A hands-on workshop on the Dobot Magician robotic arm and automation ' +
+            'control, run for schools around Loei.',
+        th: 'การอบรมเชิงปฏิบัติการเรื่องหุ่นยนต์แขนกล Dobot Magician และการควบคุม ' +
+            'ระบบอัตโนมัติ จัดให้โรงเรียนในจังหวัดเลยและพื้นที่ใกล้เคียง'
       }),
       problem: t({
-        en: 'The timetable lived as a photo somebody took of the printed sheet ' +
-            'on the wall, forwarded around until it was unreadable. Every ' +
-            'morning somebody asked which room. It is the same information every ' +
-            'week and it should not be that hard to look at.',
-        th: 'ตารางเรียนอยู่ในรูปแบบภาพถ่ายที่ใครสักคนถ่ายกระดาษที่ติดผนังไว้ ' +
-            'แล้วส่งต่อกันไปเรื่อย ๆ จนอ่านไม่ออก ทุกเช้าจะมีคนถามว่าคาบนี้ห้องไหน ' +
-            'มันคือข้อมูลเดิมทุกสัปดาห์ และมันไม่ควรจะดูยากขนาดนั้น'
+        en: 'Everything I had made move until then was a light or a wheel. A robot ' +
+            'arm has to end up at a point in actual space, and it has no idea what ' +
+            'is in the way. Getting it there is not the hard part. Getting it there ' +
+            'without hitting the thing next to it, over and over, is.',
+        th: 'ก่อนหน้านั้น ทุกอย่างที่ผมเคยทำให้ขยับได้คือหลอดไฟกับล้อ แต่แขนกล ' +
+            'ต้องไปหยุดที่จุดหนึ่งในพื้นที่จริง และมันไม่รู้เลยว่ามีอะไรขวางอยู่ ' +
+            'การพามันไปถึงไม่ใช่เรื่องยาก การพาไปถึงโดยไม่ชนของที่วางอยู่ข้าง ๆ ' +
+            'ซ้ำแล้วซ้ำอีก ต่างหากที่ยาก'
       }),
       process: t({
         en: [
-          'Typed the whole timetable out once as a plain HTML table. Boring, and it is the reason everything after this was easy.',
-          'CSS Grid for the week view on a laptop. On a phone it collapses to one day at a time, because nobody scrolls sideways to read a table.',
-          'Today\'s column is highlighted, so the answer to the question people actually ask is the first thing you see.',
-          'No JavaScript at all. It is a table of text that changes twice a year, and a page that cannot break is worth more than a page that is clever.'
+          'Jogged the arm by hand first and saved the positions, rather than typing coordinates and hoping. Seeing where it actually stops is the whole point of it being in front of you.',
+          'Chained the saved points into a sequence and ran it. The first run knocked something over, which is how you find out your route is not the route you pictured.',
+          'Added the gripper, which turns one position into two: where you close it, and where you open it again.',
+          'Watched the same programme run twenty times without drifting. That repeatability is the thing an arm is for, and it is not obvious until you see it.'
         ],
         th: [
-          'พิมพ์ตารางทั้งหมดออกมาเป็นตาราง HTML ธรรมดาก่อนหนึ่งรอบ น่าเบื่อ และเป็นเหตุผลที่ทุกอย่างหลังจากนั้นง่ายไปหมด',
-          'ใช้ CSS Grid สำหรับมุมมองรายสัปดาห์บนโน้ตบุ๊ก ส่วนบนมือถือจะยุบเหลือทีละวัน เพราะไม่มีใครเลื่อนจอไปทางข้างเพื่ออ่านตาราง',
-          'คอลัมน์ของวันนี้จะถูกเน้นไว้ คำตอบของคำถามที่คนถามจริง ๆ เลยเป็นสิ่งแรกที่เห็น',
-          'ไม่มี JavaScript เลยสักบรรทัด มันคือตารางตัวอักษรที่เปลี่ยนปีละสองครั้ง และหน้าที่พังไม่ได้ มีค่ามากกว่าหน้าที่ฉลาด'
+          'ลองจับแขนกลขยับด้วยมือแล้วบันทึกตำแหน่งไว้ก่อน แทนที่จะพิมพ์พิกัดแล้วภาวนา การได้เห็นว่ามันหยุดตรงไหนจริง ๆ คือเหตุผลที่มันมาตั้งอยู่ตรงหน้าเรา',
+          'ต่อจุดที่บันทึกไว้เป็นลำดับแล้วสั่งรัน รอบแรกมันปัดของล้ม ซึ่งเป็นวิธีที่ทำให้รู้ว่าเส้นทางที่คิดไว้ในหัว ไม่ใช่เส้นทางที่มันเดินจริง',
+          'ใส่หัวจับเข้าไป ซึ่งเปลี่ยนหนึ่งตำแหน่งให้กลายเป็นสองตำแหน่ง คือจุดที่หนีบ กับจุดที่ปล่อย',
+          'นั่งดูโปรแกรมเดิมรันซ้ำยี่สิบรอบโดยไม่เพี้ยน ความแม่นซ้ำแบบนี้คือเหตุผลที่แขนกลมีอยู่ และไม่มีทางรู้สึกได้จนกว่าจะเห็นกับตา'
         ]
       }),
       learned: t({
         en: [
-          'Ask the people who will use it what they actually look for. Everyone said "which room", nobody said "the whole week".',
-          'A table is the right element for a table. I tried to be clever with divs first and it read worse and announced worse.',
-          'The version with no JavaScript is still working now, months later, without me touching it.'
+          'A machine that moves in the real world fails differently from code. There is no undo, and the mistake makes a noise.',
+          'Teaching positions by hand beats calculating them, at least until you understand what the numbers mean.',
+          'Automation is mostly deciding the order of things, and only a little about the robot.'
         ],
         th: [
-          'ไปถามคนที่จะใช้จริงว่าเขาหาอะไร ทุกคนตอบว่า "ห้องไหน" ไม่มีใครตอบว่า "ทั้งสัปดาห์"',
-          'ตารางควรใช้แท็กตาราง ตอนแรกผมพยายามฉลาดด้วย div แล้วมันทั้งอ่านยากกว่า และโปรแกรมอ่านหน้าจอก็อ่านออกมาแย่กว่า',
-          'เวอร์ชันที่ไม่มี JavaScript ยังทำงานอยู่จนถึงตอนนี้ ผ่านมาหลายเดือน โดยที่ผมไม่ต้องไปแตะมันเลย'
+          'เครื่องจักรที่ขยับในโลกจริงพังคนละแบบกับโค้ด มันไม่มีปุ่มย้อนกลับ และตอนพลาดมันมีเสียงด้วย',
+          'การสอนตำแหน่งด้วยมือดีกว่าการคำนวณเอา อย่างน้อยก็จนกว่าจะเข้าใจว่าตัวเลขพวกนั้นหมายถึงอะไร',
+          'ระบบอัตโนมัติส่วนใหญ่คือการตัดสินใจว่าจะทำอะไรก่อนหลัง ส่วนเรื่องตัวหุ่นยนต์เป็นแค่ส่วนเล็ก ๆ'
         ]
       }),
       tech: t({
-        en: ['HTML', 'CSS Grid', 'No JavaScript'],
-        th: ['HTML', 'CSS Grid', 'ไม่มี JavaScript']
+        en: ['Dobot Magician', 'Teach-and-repeat positioning', 'Gripper end effector', 'Automation sequencing'],
+        th: ['Dobot Magician', 'การสอนตำแหน่งแล้วสั่งทำซ้ำ', 'หัวจับปลายแขน', 'การเรียงลำดับงานอัตโนมัติ']
       }),
       links: []
     },
 
     {
-      id: 'room-monitor',
+      id: 'freefire',
       featured: false,
       name: t({ en: 'Project 5', th: 'โปรเจกต์ 5' }),
       tagline: t({
-        en: 'A sensor that settles an argument about how hot the room is',
-        th: 'เซ็นเซอร์ที่เอาไว้ตัดสินว่าห้องนี้ร้อนจริงหรือคิดไปเอง'
+        en: 'Four against four, and the part nobody practises is talking',
+        th: 'สี่ต่อสี่ และสิ่งที่ไม่มีใครซ้อมคือการพูดกัน'
       }),
-      year: '2025',
-      role: t({ en: 'C, wiring, and reading a datasheet properly', th: 'เขียน C ต่อสาย และอ่านดาต้าชีตให้จบ' }),
-      client: t({ en: 'The classroom at the end of the corridor', th: 'ห้องเรียนสุดทางเดิน' }),
-      duration: t({ en: 'Three weeks', th: 'สามสัปดาห์' }),
-      category: 'hardware',
+      year: t({ en: '2025', th: '2568' }),
+      role: t({ en: 'Player', th: 'ผู้เล่น' }),
+      client: t({
+        en: 'Computer Science, Faculty of Science and Technology, Loei Rajabhat University',
+        th: 'สาขาวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏเลย'
+      }),
+      duration: t({ en: 'One day, 26 July 2025', th: 'หนึ่งวัน 26 กรกฎาคม 2568' }),
+      category: 'competition',
       tags: t({
-        en: ['C', 'DHT11', 'Arduino', 'LCD'],
-        th: ['C', 'DHT11', 'Arduino', 'จอ LCD']
+        en: ['E-sport', 'Free Fire', 'Team of four'],
+        th: ['อีสปอร์ต', 'Free Fire', 'ทีมสี่คน']
       }),
-      cover: 'assets/img/work-monitor.svg',
+      cover: 'assets/img/cert-freefire.jpg',
       coverAlt: t({
-        en: 'Drawing of a small display showing temperature and humidity, wired to a sensor',
-        th: 'ภาพวาดจอเล็ก ๆ แสดงอุณหภูมิและความชื้น ต่อสายอยู่กับเซ็นเซอร์'
+        en: 'Certificate for taking part in the Free Fire 4v4 tournament at Loei Rajabhat University',
+        th: 'เกียรติบัตรการเข้าร่วมการแข่งขัน Free Fire 4v4 ที่มหาวิทยาลัยราชภัฏเลย'
       }),
       summary: t({
-        en: 'Temperature and humidity on a small screen, updated every few ' +
-            'seconds, so the answer is a number instead of an opinion.',
-        th: 'อุณหภูมิกับความชื้นบนจอเล็ก ๆ อัปเดตทุกไม่กี่วินาที คำตอบจะได้ ' +
-            'เป็นตัวเลข ไม่ใช่ความรู้สึก'
+        en: 'The university e-sport tournament. Four of us, one bracket, and a ' +
+            'lesson about teams that had nothing to do with the game.',
+        th: 'การแข่งอีสปอร์ตของมหาวิทยาลัย พวกเราสี่คน หนึ่งสายการแข่ง ' +
+            'และบทเรียนเรื่องการทำงานเป็นทีมที่ไม่เกี่ยวกับเกมเลย'
       }),
       problem: t({
-        en: 'One room in our building is hotter than the others and everybody ' +
-            'has a theory about why. Nobody had a number. A thermometer on the ' +
-            'wall answers it once; something that reads every few seconds and ' +
-            'shows it on a screen answers it all day.',
-        th: 'มีห้องหนึ่งในตึกที่ร้อนกว่าห้องอื่น และทุกคนมีทฤษฎีของตัวเองว่าทำไม ' +
-            'แต่ไม่มีใครมีตัวเลข เทอร์โมมิเตอร์ติดผนังตอบได้ครั้งเดียว ' +
-            'ส่วนของที่อ่านค่าทุกไม่กี่วินาทีแล้วขึ้นจอ ตอบได้ทั้งวัน'
+        en: 'Four people who are each fine on their own are not a team. In a 4v4 ' +
+            'you lose rounds you should have won because two of you went for the ' +
+            'same thing and nobody covered the other side. The game is the easy ' +
+            'part. Agreeing on a plan in the ten seconds before it starts is not.',
+        th: 'คนสี่คนที่เก่งของตัวเองคนละคน ยังไม่นับว่าเป็นทีม ในโหมด 4v4 ' +
+            'เราแพ้รอบที่ควรจะชนะ เพราะสองคนไปทางเดียวกัน แล้วไม่มีใครดูอีกฝั่ง ' +
+            'ตัวเกมคือส่วนที่ง่าย การตกลงแผนกันให้ได้ในสิบวินาทีก่อนเริ่ม ต่างหากที่ยาก'
       }),
       process: t({
         en: [
-          'Read the sensor on its own first and printed the values over serial, the same way I started the traffic light. It is the only way I trust anything afterwards.',
-          'The DHT11 wants a gap between readings and returns nonsense if you rush it. That is in the datasheet, which I found out after an afternoon of blaming my wiring.',
-          'Averaged the last few readings before showing them, so the display is not flickering between two numbers that are a tenth of a degree apart.',
-          'Put it on a 16x2 LCD rather than a computer, so it works with nothing plugged into it except power.'
+          'Signed up as a team of four and worked out our roles before the bracket started, rather than during it.',
+          'Agreed to call things out in short words. Long sentences arrive after the thing they were about.',
+          'Lost a round, talked about what actually happened instead of who did it, and went again.',
+          'Played the bracket out to the end. We did not win it, and the certificate says participation, which is what it was.'
         ],
         th: [
-          'อ่านค่าจากเซ็นเซอร์อย่างเดียวก่อน แล้วพิมพ์ออกทาง serial แบบเดียวกับตอนเริ่มทำไฟจราจร เป็นวิธีเดียวที่ทำให้ผมเชื่อทุกอย่างที่ตามมาทีหลังได้',
-          'DHT11 ต้องการเวลาห่างระหว่างการอ่านแต่ละครั้ง ถ้ารีบมันจะคืนค่ามั่ว ๆ มา เรื่องนี้อยู่ในดาต้าชีต ซึ่งผมไปเจอหลังจากนั่งโทษสายไฟตัวเองมาทั้งบ่าย',
-          'เฉลี่ยค่าที่อ่านได้ล่าสุดสองสามค่าก่อนแสดงผล จอจะได้ไม่กระพริบสลับไปมาระหว่างตัวเลขที่ต่างกันแค่หนึ่งในสิบองศา',
-          'เอาไปแสดงบนจอ LCD 16x2 แทนที่จะต่อคอมพิวเตอร์ มันจะได้ทำงานได้โดยไม่ต้องเสียบอะไรเลยนอกจากไฟ'
+          'สมัครเป็นทีมสี่คน แล้วตกลงหน้าที่กันให้จบก่อนสายการแข่งจะเริ่ม ไม่ใช่ระหว่างแข่ง',
+          'ตกลงกันว่าจะสื่อสารด้วยคำสั้น ๆ ประโยคยาว ๆ มักมาถึงหลังจากเรื่องที่จะบอกจบไปแล้ว',
+          'แพ้ไปหนึ่งรอบ แล้วคุยกันว่าเกิดอะไรขึ้นจริง ๆ แทนที่จะคุยว่าใครทำ แล้วก็ลงไปใหม่',
+          'เล่นจนจบสาย เราไม่ได้ชนะ และเกียรติบัตรเขียนว่าเข้าร่วม ซึ่งก็ตรงตามนั้น'
         ]
       }),
       learned: t({
         en: [
-          'Read the datasheet before you blame the wiring. It would have saved me an afternoon.',
-          'A raw sensor reading is not a measurement yet. Averaging is the difference between a number and a flicker.',
-          'People believe a screen on the wall in a way they do not believe you telling them the same thing.'
+          'Say the short thing now, not the accurate thing in five seconds.',
+          'Reviewing a loss works when you talk about the situation and not the person. That is not a games thing, it turns out.',
+          'Practising alone and playing together are two different skills, and I had only been doing one of them.'
         ],
         th: [
-          'อ่านดาต้าชีตก่อนจะไปโทษสายไฟ ถ้าทำแบบนั้นผมคงประหยัดไปได้ทั้งบ่าย',
-          'ค่าดิบจากเซ็นเซอร์ยังไม่นับเป็นค่าที่วัดได้ การเฉลี่ยคือเส้นแบ่งระหว่างตัวเลข กับแสงที่กระพริบไปมา',
-          'คนเชื่อจอที่ติดอยู่บนผนัง ในแบบที่เขาไม่เชื่อเราตอนเราบอกเรื่องเดียวกัน'
+          'พูดสั้น ๆ ตอนนี้ ดีกว่าพูดให้ครบถ้วนในอีกห้าวินาที',
+          'การมานั่งทบทวนตอนแพ้จะได้ผล ถ้าคุยกันที่สถานการณ์ ไม่ใช่ที่ตัวคน ซึ่งกลายเป็นว่าไม่ใช่เรื่องของเกมอย่างเดียว',
+          'การซ้อมคนเดียวกับการเล่นด้วยกัน เป็นคนละทักษะ และผมทำอยู่แค่อย่างเดียวมาตลอด'
         ]
       }),
       tech: t({
-        en: ['C', 'Arduino', 'DHT11 temperature and humidity sensor', '16x2 LCD', 'Breadboard'],
-        th: ['C', 'Arduino', 'เซ็นเซอร์อุณหภูมิและความชื้น DHT11', 'จอ LCD 16x2', 'เบรดบอร์ด']
+        en: ['Free Fire', '4v4 format', 'Voice comms', 'Four people who had to agree'],
+        th: ['Free Fire', 'รูปแบบ 4v4', 'การสื่อสารด้วยเสียง', 'คนสี่คนที่ต้องตกลงกันให้ได้']
       }),
       links: []
     },
 
     {
-      id: 'line-robot',
+      id: 'ponglang',
       featured: false,
       name: t({ en: 'Project 6', th: 'โปรเจกต์ 6' }),
       tagline: t({
-        en: 'A robot that follows a line, eventually, most of the time',
-        th: 'หุ่นยนต์เดินตามเส้น ที่สุดท้ายก็ทำได้ เกือบทุกครั้ง'
+        en: 'Gold medal, first runner-up, with the school folk band',
+        th: 'เหรียญทอง รองชนะเลิศอันดับ 1 กับวงดนตรีพื้นเมืองของโรงเรียน'
       }),
-      year: '2025',
-      role: t({ en: 'C, motors, and a lot of tape on the floor', th: 'เขียน C ต่อมอเตอร์ และแปะเทปเต็มพื้น' }),
-      client: t({ en: 'Robotics club', th: 'ชุมนุมหุ่นยนต์' }),
-      duration: t({ en: 'Most of a term', th: 'เกือบทั้งเทอม' }),
-      category: 'hardware',
+      year: t({ en: '2026', th: '2569' }),
+      role: t({ en: 'Band member', th: 'สมาชิกวง' }),
+      client: t({
+        en: 'Secondary Educational Service Area Office, Loei and Nong Bua Lamphu',
+        th: 'สำนักงานเขตพื้นที่การศึกษามัธยมศึกษาเลย หนองบัวลำภู'
+      }),
+      duration: t({
+        en: '22-23 and 26 January 2026',
+        th: '22-23 และ 26 มกราคม 2569'
+      }),
+      category: 'competition',
       tags: t({
-        en: ['C', 'IR sensors', 'Motors', 'Arduino'],
-        th: ['C', 'เซ็นเซอร์อินฟราเรด', 'มอเตอร์', 'Arduino']
+        en: ['Pong Lang', 'Isan folk music', 'Gold medal'],
+        th: ['โปงลาง', 'ดนตรีพื้นเมืองอีสาน', 'เหรียญทอง']
       }),
-      cover: 'assets/img/work-robot.svg',
+      cover: 'assets/img/cert-ponglang.jpg',
       coverAlt: t({
-        en: 'Drawing of a two-wheeled robot on a curving black line, with sensor beams pointing down',
-        th: 'ภาพวาดหุ่นยนต์สองล้อบนเส้นสีดำที่โค้งไปมา มีลำแสงเซ็นเซอร์ชี้ลงพื้น'
+        en: 'Certificate for a gold medal, first runner-up, in the Pong Lang folk band competition at the 73rd Student Arts and Crafts Festival',
+        th: 'เกียรติบัตรรางวัลเหรียญทอง รองชนะเลิศอันดับ 1 การแข่งขันวงดนตรีพื้นเมืองโปงลาง งานศิลปหัตถกรรมนักเรียน ครั้งที่ 73'
       }),
       summary: t({
-        en: 'Two motors, two infrared sensors and a strip of electrical tape. ' +
-            'Most of the work was in what it does when it loses the line.',
-        th: 'มอเตอร์สองตัว เซ็นเซอร์อินฟราเรดสองตัว กับเทปพันสายไฟหนึ่งม้วน ' +
-            'งานส่วนใหญ่อยู่ตรงที่ว่ามันจะทำอะไร ตอนที่มันหาเส้นไม่เจอ'
+        en: 'The 73rd Student Arts and Crafts Festival, Pong Lang folk band, ' +
+            'M1 to M6. Gold medal and first runner-up.',
+        th: 'งานศิลปหัตถกรรมนักเรียน ครั้งที่ 73 การแข่งขันวงดนตรีพื้นเมืองโปงลาง ' +
+            'ระดับชั้น ม.1-ม.6 ได้รางวัลเหรียญทอง รองชนะเลิศอันดับ 1'
       }),
       problem: t({
-        en: 'Following a straight line is the easy half and it works in an ' +
-            'afternoon. The corners are the real problem. The robot arrives at a ' +
-            'bend faster than it can turn, overshoots, and then it is a robot ' +
-            'sitting on a white floor with no idea where the line went.',
-        th: 'การเดินตามเส้นตรงคือครึ่งที่ง่าย และทำเสร็จได้ในบ่ายเดียว ' +
-            'ปัญหาจริงอยู่ที่ทางโค้ง หุ่นวิ่งมาถึงโค้งเร็วกว่าที่มันจะเลี้ยวทัน ' +
-            'มันเลยเลยออกไป แล้วก็กลายเป็นหุ่นยนต์ที่นั่งอยู่บนพื้นสีขาว ' +
-            'โดยไม่รู้ว่าเส้นหายไปไหน'
+        en: 'This one is not a computer. A Pong Lang band is a lot of people ' +
+            'playing loud instruments at the same time, and it only sounds like ' +
+            'one thing if everybody is exactly together. One person half a beat ' +
+            'out is audible from the back of the hall.',
+        th: 'อันนี้ไม่ใช่คอมพิวเตอร์ วงโปงลางคือคนจำนวนมากเล่นเครื่องดนตรีเสียงดัง ' +
+            'พร้อมกัน และมันจะฟังเป็นเสียงเดียวกันก็ต่อเมื่อทุกคนตรงกันเป๊ะ ' +
+            'คนเดียวที่ช้าไปครึ่งจังหวะ ได้ยินถึงหลังห้องประชุม'
       }),
       process: t({
         en: [
-          'Calibrated the sensors on the actual floor we run on, not on a desk. Black tape on our tiles reads differently from black tape anywhere else.',
-          'Started with the crude version: one sensor sees black, that wheel slows down. It wobbles down a straight line but it proves the wiring.',
-          'Slowed the whole robot down. Half the cornering problem was that it was simply going faster than it could think.',
-          'Added a memory of which side the line was on last, so when both sensors see white it turns back the way it came instead of driving off.'
+          'Rehearsed after school, over and over, on the same few bars until they stopped being the ones that fell apart.',
+          'Learned my part well enough to stop reading it, because you cannot listen to the person next to you while you are still counting.',
+          'Played it through at the district round in January, in front of judges and a hall.',
+          'Gold medal, first runner-up. One place off, which is close enough to still think about.'
         ],
         th: [
-          'ปรับค่าเซ็นเซอร์บนพื้นที่ใช้วิ่งจริง ไม่ใช่บนโต๊ะ เทปดำบนกระเบื้องของเรา ให้ค่าไม่เหมือนเทปดำบนพื้นที่อื่น',
-          'เริ่มจากเวอร์ชันหยาบ ๆ ก่อน เซ็นเซอร์ข้างไหนเห็นสีดำ ล้อข้างนั้นก็ช้าลง มันส่ายไปมาบนเส้นตรง แต่พิสูจน์ว่าสายไฟถูกแล้ว',
-          'ลดความเร็วหุ่นลงทั้งตัว ครึ่งหนึ่งของปัญหาทางโค้ง คือมันวิ่งเร็วกว่าที่มันคิดทัน เฉย ๆ',
-          'เพิ่มความจำว่าเส้นอยู่ข้างไหนเป็นครั้งสุดท้าย พอเซ็นเซอร์เห็นสีขาวทั้งสองตัว มันจะเลี้ยวกลับไปทางเดิม แทนที่จะวิ่งหลุดออกไป'
+          'ซ้อมหลังเลิกเรียน วนแล้ววนอีก อยู่กับท่อนเดิมไม่กี่ท่อน จนกว่ามันจะเลิกเป็นท่อนที่พังทุกรอบ',
+          'จำท่อนของตัวเองให้ได้จนไม่ต้องอ่านโน้ต เพราะเราฟังคนข้าง ๆ ไม่ได้ ถ้ายังต้องนับจังหวะอยู่',
+          'ขึ้นเล่นจริงในรอบเขตพื้นที่เดือนมกราคม ต่อหน้ากรรมการและคนทั้งห้อง',
+          'ได้เหรียญทอง รองชนะเลิศอันดับ 1 ห่างอีกอันดับเดียว ซึ่งใกล้พอที่จะยังคิดถึงมันอยู่'
         ]
       }),
       learned: t({
         en: [
-          'Slowing down fixed more than any code I wrote. Not every problem is a logic problem.',
-          'Calibrate where it runs. A value that works on the club table is not a value that works on the corridor floor.',
-          'Deciding what to do when the input is missing is most of the job, in hardware and everywhere else.'
+          'Being together matters more than being good. A band that is tight and simple beats a band that is clever and ragged.',
+          'You cannot listen while you are still counting. Knowing your own part is what buys you the attention to hear everybody else.',
+          'It is the same lesson as the Free Fire bracket, in a completely different room, which is probably how I know it is a real one.'
         ],
         th: [
-          'การลดความเร็วลง แก้ปัญหาได้มากกว่าโค้ดทุกบรรทัดที่ผมเขียน ไม่ใช่ทุกปัญหาจะเป็นปัญหาเรื่องตรรกะ',
-          'ปรับค่าตรงที่มันวิ่งจริง ค่าที่ใช้ได้บนโต๊ะชุมนุม ไม่ใช่ค่าที่ใช้ได้บนพื้นทางเดิน',
-          'การตัดสินใจว่าจะทำอะไรตอนที่ข้อมูลขาดหายไป คืองานส่วนใหญ่ ทั้งในฮาร์ดแวร์และในทุกเรื่อง'
+          'ความพร้อมเพรียงสำคัญกว่าความเก่ง วงที่แน่นและเรียบง่าย ชนะวงที่พลิ้วแต่ไม่ตรงกัน',
+          'เราฟังคนอื่นไม่ได้ถ้ายังนับจังหวะอยู่ การจำท่อนตัวเองให้ได้ คือสิ่งที่ซื้อสมาธิมาให้เราได้ยินคนอื่น',
+          'มันคือบทเรียนเดียวกับตอนแข่ง Free Fire แค่คนละห้อง คนละเรื่องกันเลย ซึ่งน่าจะเป็นเหตุผลที่ผมรู้ว่ามันเป็นเรื่องจริง'
         ]
       }),
       tech: t({
-        en: ['C', 'Arduino', 'IR reflectance sensors', 'DC motors and driver', 'Electrical tape'],
-        th: ['C', 'Arduino', 'เซ็นเซอร์สะท้อนอินฟราเรด', 'มอเตอร์กระแสตรงและไดรเวอร์', 'เทปพันสายไฟ']
+        en: ['Pong Lang', 'Isan folk ensemble', 'Rehearsal, mostly'],
+        th: ['โปงลาง', 'วงดนตรีพื้นเมืองอีสาน', 'การซ้อม เป็นหลัก']
       }),
       links: []
     }
@@ -649,8 +666,8 @@ window.PORTFOLIO = (function () {
 
   /* ---------- 7. Filter labels ------------------------------------------- */
   const categories = t({
-    en: { 'all': 'everything', 'hardware': 'hardware', 'web': 'web', 'competition': 'competitions' },
-    th: { 'all': 'ทั้งหมด', 'hardware': 'ฮาร์ดแวร์', 'web': 'เว็บ', 'competition': 'การแข่งขัน' }
+    en: { 'all': 'everything', 'hardware': 'hardware', 'web': 'web', 'competition': 'competitions', 'training': 'training' },
+    th: { 'all': 'ทั้งหมด', 'hardware': 'ฮาร์ดแวร์', 'web': 'เว็บ', 'competition': 'การแข่งขัน', 'training': 'อบรม' }
   });
 
   /* ---------- 8. Helpers used by the page scripts ------------------------ */
